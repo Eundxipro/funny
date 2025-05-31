@@ -230,7 +230,7 @@
             max-height: 300px; /* Disesuaikan agar tidak terlalu panjang per sub-topik */
             overflow-y: auto;
             margin-bottom: 15px;
-            padding-right: 10px;
+            padding-right: 10px; /* For scrollbar visibility */
         }
         .comment-item {
             background-color: #f9fafb;
@@ -392,7 +392,7 @@
             },
              "gamer": {
                 title: "Arena Gamer Kampus Pertanian: Lebih dari Sekadar Cangkul!",
-                bodyHTML: `<p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p><p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p><p><strong>Update Terbaru (Segera Hadir):</strong></p><ul><li>Jadwal Turnamen E-Sport Antar Angkatan.</li><li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li><li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li></ul> ${createCommentSectionHTML("gamer-main")}` // Contoh untuk topik tanpa sub-bagian
+                bodyHTML: `<p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p><p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p><p><strong>Update Terbaru (Segera Hadir):</strong></p><ul><li>Jadwal Turnamen E-Sport Antar Angkatan.</li><li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li><li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li></ul> ${createCommentSectionHTML("gamer-main")}`
             },
             "tugas": {
                 title: "Info Tugas Kuliah & Deadline Pertanian: Anti Panik!",
@@ -472,35 +472,36 @@
 
             if (topicContent && topicMeta) {
                 contentTitle.innerHTML = `<i class="${topicMeta.icon}" style="margin-right: 10px; color: #3b82f6;"></i>${topicContent.title}`;
-                contentBody.innerHTML = topicContent.bodyHTML; // Ini akan membuat elemen komentar
+                contentBody.innerHTML = topicContent.bodyHTML; 
                 
                 topicSelectionScreen.classList.add('hidden');
                 contentDisplayScreen.classList.remove('hidden');
                 contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
 
-                // Setelah HTML konten (termasuk placeholder komentar) dimuat:
-                // Inisialisasi komentar untuk setiap sub-bagian
                 const commentForms = contentBody.querySelectorAll('.comment-form');
                 commentForms.forEach(form => {
                     const subTopicId = form.dataset.subtopicid;
+                    const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+                    const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
+
                     if (db && auth.currentUser) {
                          loadCommentsForSubTopic(subTopicId);
-                         form.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
+                         // Remove previous listener if any, then add new one
+                         const newForm = form.cloneNode(true); // Clone to remove old listeners
+                         form.parentNode.replaceChild(newForm, form);
+                         newForm.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
                     } else {
-                        const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
-                        const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
                         if(commentListEl) commentListEl.innerHTML = '';
                         if(noCommentsEl) {
                             noCommentsEl.textContent = firebaseConfig ? "Menunggu koneksi..." : "Fitur komentar dinonaktifkan.";
                             noCommentsEl.classList.remove('hidden');
                         }
-                        form.classList.add('hidden'); // Sembunyikan form jika firebase belum siap
+                        form.classList.add('hidden'); 
                     }
                 });
 
             } else {
-                // Handle konten tidak ditemukan
                 console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
                 contentTitle.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 10px; color: #ef4444;"></i>Konten Tidak Ditemukan`;
                 contentBody.innerHTML = "<p>Maaf, konten untuk topik ini belum tersedia atau tidak ditemukan. Silakan coba topik lain.</p>";
@@ -561,7 +562,7 @@
             }
             
             if (activeCommentListeners[subTopicId]) {
-                activeCommentListeners[subTopicId](); // Unsubscribe listener lama jika ada
+                activeCommentListeners[subTopicId](); 
             }
             commentListEl.innerHTML = '';
             noCommentsEl.textContent = "Memuat komentar...";
@@ -571,7 +572,7 @@
             const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
 
             activeCommentListeners[subTopicId] = onSnapshot(q, (querySnapshot) => {
-                commentListEl.innerHTML = ''; // Kosongkan untuk update
+                commentListEl.innerHTML = ''; 
                 if (querySnapshot.empty) {
                     noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
                     noCommentsEl.classList.remove('hidden');
@@ -614,7 +615,6 @@
             populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             
-            // Jika Firebase tidak siap, kita mungkin ingin menonaktifkan semua form komentar secara global
             if (!firebaseReady) {
                 document.querySelectorAll('.comment-form').forEach(form => form.classList.add('hidden'));
                 document.querySelectorAll('.no-comments').forEach(el => {
