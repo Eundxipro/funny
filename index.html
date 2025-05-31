@@ -47,14 +47,14 @@
         h2 { /* Judul konten utama */
             font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 12px; 
             color: #3b82f6;
         }
         h3 { /* Sub-judul untuk setiap cerita/anomali */
             font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            margin-top: 40px;
+            margin-top: 40px; 
             margin-bottom: 12px;
             text-align: left;
             border-bottom: 2px solid #e5e7eb;
@@ -290,7 +290,6 @@
             text-align: center;
             padding: 15px;
             font-size: 0.9rem;
-            /* display: none; /* Initially hidden, shown by JS if needed */
         }
 
         .hidden {
@@ -329,12 +328,28 @@
     </div>
 
     <script type="module">
+        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"; // Analytics tidak kita gunakan di sini
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
+          authDomain: "funny-e436a.firebaseapp.com",
+          projectId: "funny-e436a",
+          storageBucket: "funny-e436a.firebasestorage.app", // Menggunakan nilai yang Anda berikan
+          messagingSenderId: "626813764903",
+          appId: "1:626813764903:web:73250f741ddaac3a555502",
+          measurementId: "G-MSSK2DD3SD"
+        };
+        
+        // Initialize Firebase
+        // const app = initializeApp(firebaseConfig); // Pindahkan inisialisasi ke dalam fungsi async
+        // const analytics = getAnalytics(app); // Analytics tidak kita gunakan, bisa di-komentari atau dihapus jika tidak perlu
+        const appId = firebaseConfig.appId; // Kita tetap butuh appId untuk path Firestore
 
         let db, auth;
         let activeCommentListeners = {}; 
@@ -372,23 +387,11 @@
         const contentData = {
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
-                bodyHTML: `
-                    <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li><li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li></ul></div>
-                    <div id="romansa-kisah-1"><h3>Kisah #1: Pertemuan di Praktikum Jagung</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>${createCommentSectionHTML("romansa-kisah-1")}</div>
-                    <div id="romansa-kisah-2"><h3>Kisah #2: Momen Lain di Kebun?</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image"><p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>${createCommentSectionHTML("romansa-kisah-2")}</div>
-                `
+                bodyHTML: `<div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li><li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li></ul></div><div id="romansa-kisah-1"><h3>Kisah #1: Pertemuan di Praktikum Jagung</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>${createCommentSectionHTML("romansa-kisah-1")}</div><div id="romansa-kisah-2"><h3>Kisah #2: Momen Lain di Kebun?</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image"><p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>${createCommentSectionHTML("romansa-kisah-2")}</div>`
             },
             "anomali": {
                 title: "Anomali Mahasiswa: Fakta Unik & Mengejutkan!",
-                bodyHTML: `
-                    <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Anomali:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#anomali-1"><strong>Anomali #1:</strong> <span class="shortcut-subtitle">Spesies Baru? Mahasiswa SmT 6 Beraksi!</span></a></li><li class="shortcut-item"><a href="#anomali-2"><strong>Anomali #2:</strong> <span class="shortcut-subtitle">Sang Penguasa Jagung, KING VEDA!</span></a></li><li class="shortcut-item"><a href="#anomali-3"><strong>Anomali #3:</strong> <span class="shortcut-subtitle">Self-Reward Level Dewa ke Puncak Batur!</span></a></li><li class="shortcut-item"><a href="#anomali-4"><strong>Anomali #4:</strong> <span class="shortcut-subtitle">KING VEDA & Tragedi Merah Membara!</span></a></li></ul></div>
-                    <p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p>
-                    <div id="anomali-1"><h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image"><p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p><p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>${createCommentSectionHTML("anomali-1")}</div>
-                    <div id="anomali-2"><h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image"><p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>${createCommentSectionHTML("anomali-2")}</div>
-                    <div id="anomali-3"><h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image"><p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>${createCommentSectionHTML("anomali-3")}</div>
-                    <div id="anomali-4"><h3>Anomali #4: KING VEDA & Tragedi Merah Membara di Pasar Saham!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.47.56.jpeg" alt="KING VEDA terkapar karena trading" class="content-image"><p>Oh, nasibmu, KING VEDA! Sang penguasa jagung yang gagah perkasa pun takluk di hadapan grafik candlestick yang tak kenal ampun. Tertangkap kamera, momen langka ketika Yang Mulia terkapar tak berdaya di lantai keramat ruang kampus. Usut punya usut, beliau baru saja mengalami 'cut loss' berjamaah setelah mencoba peruntungan di dunia trading yang fana. Portfolio merah membara, harapan cuan pun sirna. Mungkin beliau terlalu fokus pada 'support dan resistance' harga gabah, hingga lupa 'stop loss' di pasar saham. Mari kita doakan semoga KING VEDA segera bangkit dan kembali ke takhta jagungnya, atau mungkin beralih ke investasi lele dumbo yang lebih stabil. Ingat, Veda, jangan all-in!</p>${createCommentSectionHTML("anomali-4")}</div>
-                    <p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p><ul><li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li><li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li><li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li></ul><p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>
-                `
+                bodyHTML: `<div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Anomali:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#anomali-1"><strong>Anomali #1:</strong> <span class="shortcut-subtitle">Spesies Baru? Mahasiswa SmT 6 Beraksi!</span></a></li><li class="shortcut-item"><a href="#anomali-2"><strong>Anomali #2:</strong> <span class="shortcut-subtitle">Sang Penguasa Jagung, KING VEDA!</span></a></li><li class="shortcut-item"><a href="#anomali-3"><strong>Anomali #3:</strong> <span class="shortcut-subtitle">Self-Reward Level Dewa ke Puncak Batur!</span></a></li><li class="shortcut-item"><a href="#anomali-4"><strong>Anomali #4:</strong> <span class="shortcut-subtitle">KING VEDA & Tragedi Merah Membara!</span></a></li></ul></div><p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p><div id="anomali-1"><h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image"><p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p><p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>${createCommentSectionHTML("anomali-1")}</div><div id="anomali-2"><h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image"><p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>${createCommentSectionHTML("anomali-2")}</div><div id="anomali-3"><h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image"><p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>${createCommentSectionHTML("anomali-3")}</div><div id="anomali-4"><h3>Anomali #4: KING VEDA & Tragedi Merah Membara di Pasar Saham!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.47.56.jpeg" alt="KING VEDA terkapar karena trading" class="content-image"><p>Oh, nasibmu, KING VEDA! Sang penguasa jagung yang gagah perkasa pun takluk di hadapan grafik candlestick yang tak kenal ampun. Tertangkap kamera, momen langka ketika Yang Mulia terkapar tak berdaya di lantai keramat ruang kampus. Usut punya usut, beliau baru saja mengalami 'cut loss' berjamaah setelah mencoba peruntungan di dunia trading yang fana. Portfolio merah membara, harapan cuan pun sirna. Mungkin beliau terlalu fokus pada 'support dan resistance' harga gabah, hingga lupa 'stop loss' di pasar saham. Mari kita doakan semoga KING VEDA segera bangkit dan kembali ke takhta jagungnya, atau mungkin beralih ke investasi lele dumbo yang lebih stabil. Ingat, Veda, jangan all-in!</p>${createCommentSectionHTML("anomali-4")}</div><p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p><ul><li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li><li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li><li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li></ul><p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>`
             },
              "gamer": {
                 title: "Arena Gamer Kampus Pertanian: Lebih dari Sekadar Cangkul!",
@@ -405,25 +408,56 @@
         };
         
         async function initializeFirebase() {
-            if (!firebaseConfig) {
-                console.error("Firebase config is not defined. Commenting feature will be disabled.");
-                return false;
+            // Pengecekan apakah firebaseConfig sudah diisi dengan benar
+            if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA") { 
+                 // Jika API Key masih placeholder umum, atau jika API Key spesifik Anda tidak cocok dengan projectId yang diharapkan
+                 if (firebaseConfig.apiKey === "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E" && firebaseConfig.projectId !== "funny-e436a") {
+                    console.warn("API Key terdeteksi, namun projectId tidak cocok. Pastikan konfigurasi benar.");
+                 } else {
+                    console.warn("Konfigurasi Firebase belum diatur dengan benar atau menggunakan placeholder. Fitur komentar mungkin tidak berfungsi.");
+                 }
+                 const siteHeaderP = document.querySelector('.site-header p');
+                 if (siteHeaderP && !document.getElementById('firebase-warning')) { 
+                     const warning = document.createElement('p');
+                     warning.id = 'firebase-warning'; 
+                     warning.textContent = "Peringatan: Konfigurasi Firebase belum diatur dengan benar. Fitur komentar tidak akan berfungsi.";
+                     warning.style.color = "red";
+                     warning.style.fontWeight = "bold";
+                     warning.style.marginTop = "10px";
+                     siteHeaderP.parentNode.insertBefore(warning, siteHeaderP.nextSibling);
+                 }
+                 return false; 
             }
+
             try {
                 const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
-                setLogLevel('debug'); 
+                setLogLevel('error'); 
 
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
-                console.log("Firebase initialized and user signed in:", auth.currentUser ? auth.currentUser.uid : "No user");
+                console.log("Firebase berhasil diinisialisasi dan pengguna telah sign-in secara anonim.");
+                const warningElement = document.getElementById('firebase-warning');
+                if (warningElement) warningElement.remove();
+                const errorElement = document.getElementById('firebase-error'); // Hapus juga pesan error jika berhasil
+                if (errorElement) errorElement.remove();
                 return true;
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
+                 const siteHeaderP = document.querySelector('.site-header p');
+                 if (siteHeaderP && !document.getElementById('firebase-error')) {
+                     const errorMsg = document.createElement('p');
+                     errorMsg.id = 'firebase-error';
+                     errorMsg.textContent = `Error Firebase: ${error.message}. Fitur komentar tidak akan berfungsi.`;
+                     errorMsg.style.color = "red";
+                     errorMsg.style.fontWeight = "bold";
+                     errorMsg.style.marginTop = "10px";
+                     siteHeaderP.parentNode.insertBefore(errorMsg, siteHeaderP.nextSibling);
+                 }
                 return false;
             }
         }
@@ -478,31 +512,30 @@
                 contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
 
-                // Ensure DOM is ready for comment forms
                 setTimeout(() => {
                     const commentForms = contentBody.querySelectorAll('.comment-form');
                     commentForms.forEach(form => {
                         const subTopicId = form.dataset.subtopicid;
-                        const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
                         const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
 
-                        if (db && auth.currentUser) { // Check if Firebase is ready
+                        if (db && auth.currentUser) { 
+                             if(noCommentsEl) noCommentsEl.style.display = 'block'; 
                              loadCommentsForSubTopic(subTopicId);
                              const newForm = form.cloneNode(true); 
                              form.parentNode.replaceChild(newForm, form);
                              newForm.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
-                             newForm.classList.remove('hidden'); // Explicitly show
-                             if(noCommentsEl) noCommentsEl.style.display = 'block'; // Show "Memuat komentar..."
+                             newForm.classList.remove('hidden');
                         } else {
-                            if(commentListEl) commentListEl.innerHTML = '';
-                            if(noCommentsEl) {
-                                noCommentsEl.textContent = firebaseConfig ? "Menunggu koneksi ke layanan komentar..." : "Fitur komentar dinonaktifkan.";
+                            const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+                            if (commentListEl) commentListEl.innerHTML = '';
+                            if (noCommentsEl) {
+                                noCommentsEl.textContent = (!firebaseConfig || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA" || (firebaseConfig.apiKey === "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E" && firebaseConfig.projectId !== "funny-e436a")) ? "Fitur komentar dinonaktifkan (Konfigurasi Firebase belum diatur)." : "Menunggu koneksi ke layanan komentar...";
                                 noCommentsEl.style.display = 'block';
                             }
                             form.classList.add('hidden'); 
                         }
                     });
-                }, 0); // setTimeout to allow DOM to update
+                }, 100); 
 
             } else {
                 console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
@@ -569,7 +602,7 @@
             }
             commentListEl.innerHTML = '';
             noCommentsEl.textContent = "Memuat komentar...";
-            noCommentsEl.style.display = 'block'; // Show "Memuat komentar..."
+            noCommentsEl.style.display = 'block';
 
             const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
             const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
@@ -580,7 +613,7 @@
                     noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
                     noCommentsEl.style.display = 'block'; 
                 } else {
-                    noCommentsEl.style.display = 'none'; // Hide if there are comments
+                    noCommentsEl.style.display = 'none'; 
                     querySnapshot.forEach((doc) => {
                         displayCommentInList(doc.data(), commentListEl);
                     });
@@ -618,11 +651,8 @@
             populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             
-            // Logic to handle UI if Firebase isn't ready is now primarily within loadContent
-            // This ensures it's applied when the comment sections are actually in the DOM.
             if (!firebaseReady) {
-                console.warn("Firebase tidak siap saat DOMContentLoaded. Fitur komentar mungkin tidak berfungsi sampai Firebase siap dan konten dimuat ulang.");
-                // Tidak perlu menyembunyikan form secara global di sini karena loadContent akan menanganinya.
+                console.warn("Firebase tidak siap saat DOMContentLoaded. Fitur komentar mungkin tidak akan berfungsi dengan benar sampai Firebase terhubung dan konten dimuat ulang.");
             }
         });
     </script>
