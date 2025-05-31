@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siapa Secret Admirer Kamu & Kejutan Spesial!</title>
+    <title>Secret Admirer, Gelar & Tips Spesial!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVXM5RdhCRK0B3TUmrQAATGHCVARg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -14,31 +14,31 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #f0f4f8; /* Warna latar belakang yang lembut */
+            background-color: #f0f4f8;
             margin: 0;
-            padding: 16px; /* Padding untuk mobile */
+            padding: 16px;
         }
         .container {
             background-color: white;
-            padding: 24px; /* Padding lebih besar untuk kontainer */
+            padding: 24px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 400px; /* Lebar maksimal kontainer */
+            max-width: 400px;
         }
         .btn {
-            display: inline-block; /* Agar bisa diatur padding dan margin */
+            display: inline-block;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            margin-top: 16px; /* Margin atas untuk tombol */
-            width: 100%; /* Tombol memenuhi lebar */
+            margin-top: 16px;
+            width: 100%;
         }
         .btn-primary {
-            background-color: #3b82f6; /* Biru */
+            background-color: #3b82f6;
             color: white;
         }
         .btn-primary:hover {
@@ -46,23 +46,31 @@
             transform: translateY(-2px);
         }
         .btn-secondary {
-            background-color: #6b7280; /* Abu-abu */
+            background-color: #6b7280;
             color: white;
         }
         .btn-secondary:hover {
             background-color: #4b5563;
             transform: translateY(-2px);
         }
-        .btn-accent { /* Tombol baru untuk langkah selanjutnya */
-            background-color: #f59e0b; /* Kuning/Oranye */
+        .btn-accent {
+            background-color: #f59e0b;
             color: white;
         }
         .btn-accent:hover {
             background-color: #d97706;
             transform: translateY(-2px);
         }
+        .btn-success { /* Tombol baru untuk tips */
+            background-color: #16a34a; /* Hijau lebih tua */
+            color: white;
+        }
+        .btn-success:hover {
+            background-color: #15803d;
+            transform: translateY(-2px);
+        }
         .btn-share {
-            background-color: #10b981; /* Hijau */
+            background-color: #10b981;
             color: white;
         }
         .btn-share:hover {
@@ -70,28 +78,45 @@
             transform: translateY(-2px);
         }
         .gender-btn {
-            border: 2px solid #d1d5db; /* Abu-abu muda */
-            color: #374151; /* Abu-abu tua */
-            width: 100%; /* Tombol gender memenuhi lebar */
-            margin-bottom: 12px; /* Jarak antar tombol gender */
+            border: 2px solid #d1d5db;
+            color: #374151;
+            width: 100%;
+            margin-bottom: 12px;
         }
         .gender-btn.selected {
-            background-color: #3b82f6; /* Biru */
+            background-color: #3b82f6;
             color: white;
             border-color: #3b82f6;
         }
         .gender-btn:hover:not(.selected) {
-            background-color: #f3f4f6; /* Abu-abu sangat muda */
+            background-color: #f3f4f6;
         }
         h1 {
-            font-size: 1.75rem; /* Ukuran font lebih besar untuk judul */
+            font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 16px;
-            color: #1f2937; /* Abu-abu gelap */
+            color: #1f2937;
+        }
+        h2 { /* Untuk sub-judul di layar tips */
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1f2937;
         }
         p {
-            color: #4b5563; /* Abu-abu sedang */
+            color: #4b5563;
             margin-bottom: 24px;
+        }
+        .tips-list {
+            text-align: left;
+            margin: 20px auto;
+            padding-left: 20px; /* Indentasi untuk list */
+            list-style-type: '👉 '; /* Emoji sebagai bullet point */
+            color: #374151; /* Warna teks untuk tips */
+        }
+        .tips-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
         }
         .hidden {
             display: none;
@@ -101,7 +126,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border-left-color: #3b82f6; /* Biru */
+            border-left-color: #3b82f6;
             animation: spin 1s ease infinite;
             margin: 20px auto;
         }
@@ -110,33 +135,49 @@
             100% { transform: rotate(360deg); }
         }
         .result-name {
-            font-size: 2.5rem; /* Ukuran font sangat besar untuk nama */
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #ef4444; /* Merah */
+            color: #ef4444;
             margin: 16px 0;
             animation: popIn 0.5s ease-out;
         }
-        .title-text { /* Styling untuk gelar SUPER KING */
+        .title-text {
             font-size: 2.2rem;
             font-weight: 700;
-            color: #8b5cf6; /* Ungu */
+            color: #8b5cf6;
             margin: 16px 0;
-            animation: popIn 0.5s ease-out 0.2s; /* Sedikit delay */
+            animation: popIn 0.5s ease-out 0.2s;
+        }
+        .stroke-text { /* Untuk teks STROKE */
+            font-size: 3rem;
+            font-weight: bold;
+            color: #dc2626; /* Merah menyala */
+            text-transform: uppercase;
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
         }
         @keyframes popIn {
             0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         .icon {
-            font-size: 3rem; /* Ukuran ikon besar */
+            font-size: 3rem;
             margin-bottom: 16px;
         }
-        #copyNotification { /* Digunakan juga untuk notifikasi screenshot */
+        #copyNotification {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #1f2937; /* Abu-abu gelap */
+            background-color: #1f2937;
             color: white;
             padding: 10px 20px;
             border-radius: 6px;
@@ -147,7 +188,7 @@
         }
         #copyNotification.show {
             opacity: 1;
-            bottom: 40px; /* Naikkan sedikit saat muncul */
+            bottom: 40px;
         }
     </style>
 </head>
@@ -184,12 +225,28 @@
             <p>Kamu dianugerahi gelar kehormatan:</p>
             <div class="title-text">SUPER KING</div>
             <p>oleh King Veda!</p>
-            <button id="shareTitleButton" class="btn btn-share" onclick="shareTitleAsImage()">Bagikan Gelar Ini!</button>
+            <button class="btn btn-success" onclick="showKingVedaTipsScreen()">Dapatkan Tips dari King Veda!</button>
+            </div>
+
+        <div id="kingVedaTipsScreen" class="hidden">
+            <div class="icon">💡</div>
+            <h1>Tips Eksklusif dari King Veda</h1>
+            <p>Sebagai seorang SUPER KING, berikut wejangan spesial untukmu:</p>
+            <ul class="tips-list">
+                <li>JIKA sange pergi push up</li>
+                <li>Punya HP baru? Push rankk</li>
+                <li>Dah maghrib? Sholat lanjut pushrank</li>
+                <li>Push rank push rank</li>
+                <li>Wlelelelelele</li>
+            </ul>
+            <div class="stroke-text">STROKE!</div>
+            <p class="mt-6">Gunakan gelar dan tips ini dengan bijak!</p>
+            <button id="shareTipsButton" class="btn btn-share" onclick="shareTipsAsImage()">Bagikan Tips Ini!</button>
             <button class="btn btn-secondary" onclick="tryAgain()">Coba Lagi dari Awal?</button>
         </div>
 
 
-        <div id="copyNotification" class="hidden">Link berhasil disalin!</div>
+        <div id="copyNotification" class="hidden">Notifikasi</div>
     </div>
 
     <input type="text" id="shareLinkInput" style="position: absolute; left: -9999px; top: -9999px;">
@@ -199,12 +256,14 @@
         const calculatingScreen = document.getElementById('calculatingScreen');
         const prankScreen = document.getElementById('prankScreen');
         const superKingScreen = document.getElementById('superKingScreen');
+        const kingVedaTipsScreen = document.getElementById('kingVedaTipsScreen'); // Layar baru
         const continueButton = document.getElementById('continueButton');
         const maleButton = document.getElementById('maleButton');
         const femaleButton = document.getElementById('femaleButton');
         const copyNotification = document.getElementById('copyNotification');
-        const shareLinkInput = document.getElementById('shareLinkInput'); // Tetap ada jika diperlukan di masa depan
-        const shareTitleButton = document.getElementById('shareTitleButton');
+        const shareLinkInput = document.getElementById('shareLinkInput');
+        // Tombol share gelar sekarang diubah menjadi tombol share tips
+        const shareTipsButton = document.getElementById('shareTipsButton'); 
 
         let selectedGender = null;
 
@@ -223,7 +282,7 @@
         function showCalculating() {
             if (!selectedGender) {
                 console.error('Pilihan gender tidak ada saat showCalculating dipanggil.');
-                showGeneralNotification("Pilih gender dulu ya!", true); // Notifikasi error
+                showGeneralNotification("Pilih gender dulu ya!", true);
                 return;
             }
             genderSelectionScreen.classList.add('hidden');
@@ -240,116 +299,112 @@
             superKingScreen.classList.remove('hidden');
         }
 
+        function showKingVedaTipsScreen() {
+            superKingScreen.classList.add('hidden');
+            kingVedaTipsScreen.classList.remove('hidden');
+        }
+
         function tryAgain() {
             prankScreen.classList.add('hidden');
             superKingScreen.classList.add('hidden');
+            kingVedaTipsScreen.classList.add('hidden'); // Sembunyikan juga layar tips
             genderSelectionScreen.classList.remove('hidden');
             
             selectedGender = null;
             maleButton.classList.remove('selected');
             femaleButton.classList.remove('selected');
             continueButton.disabled = true;
-            shareTitleButton.disabled = false; // Aktifkan kembali tombol share jika di-disable saat proses
-            shareTitleButton.textContent = "Bagikan Gelar Ini!";
+            
+            // Reset tombol share tips
+            if(shareTipsButton) { // Cek jika tombol ada
+                shareTipsButton.disabled = false; 
+                shareTipsButton.textContent = "Bagikan Tips Ini!";
+            }
         }
 
-        // Fungsi notifikasi yang lebih umum
         function showGeneralNotification(message, isError = false) {
             copyNotification.textContent = message;
-            if (isError) {
-                copyNotification.style.backgroundColor = '#ef4444'; // Merah untuk error
-            } else {
-                copyNotification.style.backgroundColor = '#1f2937'; // Default
-            }
+            copyNotification.style.backgroundColor = isError ? '#ef4444' : '#1f2937';
             copyNotification.classList.add('show');
             setTimeout(() => {
                 copyNotification.classList.remove('show');
-                 // Reset background color after hiding
                 setTimeout(() => { copyNotification.style.backgroundColor = '#1f2937'; }, 500);
-            }, 3000); // Tampilkan notifikasi lebih lama
+            }, 3000);
         }
         
-        async function shareTitleAsImage() {
-            shareTitleButton.disabled = true;
-            shareTitleButton.textContent = "Memproses Screenshot...";
+        async function shareTipsAsImage() { // Menggantikan shareTitleAsImage
+            if (!shareTipsButton) return; // Jika tombol tidak ada di layar ini
+
+            shareTipsButton.disabled = true;
+            shareTipsButton.textContent = "Memproses Screenshot...";
 
             try {
-                const elementToCapture = document.getElementById('superKingScreen');
+                const elementToCapture = document.getElementById('kingVedaTipsScreen'); // Target screenshot baru
                 if (!elementToCapture) {
                     showGeneralNotification("Elemen untuk screenshot tidak ditemukan.", true);
-                    resetShareButton();
+                    resetShareButton(shareTipsButton, "Bagikan Tips Ini!");
                     return;
                 }
 
-                // Sembunyikan sementara tombol agar tidak masuk screenshot
                 const buttonsToHide = elementToCapture.querySelectorAll('button');
                 buttonsToHide.forEach(btn => btn.style.visibility = 'hidden');
 
                 const canvas = await html2canvas(elementToCapture, {
-                    scale: window.devicePixelRatio * 1.5, // Tingkatkan skala untuk kualitas lebih baik
-                    useCORS: true, // Untuk font eksternal jika ada
-                    logging: false, // Set true untuk debug html2canvas
-                     // Abaikan elemen notifikasi jika terlihat
+                    scale: window.devicePixelRatio * 1.5,
+                    useCORS: true,
+                    logging: false,
                     ignoreElements: (element) => element.id === 'copyNotification'
                 });
 
-                // Kembalikan visibilitas tombol
                 buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
                 
                 const dataUrl = canvas.toDataURL('image/png');
-
-                // Konversi Data URL ke Blob lalu ke File
                 const blob = await fetch(dataUrl).then(res => res.blob());
-                const imageFile = new File([blob], "gelar-super-king.png", { type: "image/png" });
+                const imageFile = new File([blob], "tips-king-veda.png", { type: "image/png" }); // Nama file baru
 
                 if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
                     await navigator.share({
                         files: [imageFile],
-                        title: 'Gelar Super King!',
-                        text: 'Wow! Aku dapat gelar SUPER KING dari King Veda! 🥳',
+                        title: 'Tips dari King Veda!', // Judul share baru
+                        text: 'Dapet tips GG dari King Veda nih! 😂 Cekidot!', // Teks share baru
                     });
                     showGeneralNotification('Berhasil dibagikan!');
-                    resetShareButton();
                 } else {
-                    // Fallback jika Web Share API tidak didukung untuk file
-                    fallbackShare(dataUrl);
+                    fallbackShare(dataUrl, "tips-king-veda.png", `Dapet tips GG dari King Veda nih! 😂 Cekidot! Penasaran? Coba juga prank ini: ${window.location.href}`);
                 }
             } catch (error) {
-                console.error('Error saat mengambil atau membagikan screenshot:', error);
+                console.error('Error saat mengambil atau membagikan screenshot tips:', error);
                 showGeneralNotification('Gagal membuat atau membagikan screenshot.', true);
-                // Kembalikan visibilitas tombol jika error terjadi di tengah proses
-                const elementToCapture = document.getElementById('superKingScreen');
+                const elementToCapture = document.getElementById('kingVedaTipsScreen');
                 if (elementToCapture) {
                     const buttonsToHide = elementToCapture.querySelectorAll('button');
                     buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
                 }
-                resetShareButton();
+            } finally {
+                 resetShareButton(shareTipsButton, "Bagikan Tips Ini!");
             }
         }
 
-        function fallbackShare(dataUrl) {
-            // 1. Trigger download gambar
+        function fallbackShare(dataUrl, fileName, waTextMessage) {
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = 'gelar-super-king.png';
-            document.body.appendChild(link); // Diperlukan untuk Firefox
+            link.download = fileName;
+            document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link); // Bersihkan setelah diklik
+            document.body.removeChild(link);
 
-            // 2. Buka WhatsApp dengan pesan
-            const waMessage = encodeURIComponent(`Aku baru saja dapat gelar SUPER KING dari King Veda! 👑 Aku kirim screenshotnya ya. Penasaran? Coba juga prank ini: ${window.location.href}`);
+            const waMessage = encodeURIComponent(waTextMessage);
             window.open(`https://api.whatsapp.com/send?text=${waMessage}`, '_blank');
 
-            // 3. Notifikasi ke pengguna
             showGeneralNotification("Screenshot diunduh. Buka WhatsApp & lampirkan gambarnya!");
-            resetShareButton();
         }
 
-        function resetShareButton() {
-            shareTitleButton.disabled = false;
-            shareTitleButton.textContent = "Bagikan Gelar Ini!";
+        function resetShareButton(buttonElement, buttonText) {
+            if (buttonElement) {
+                buttonElement.disabled = false;
+                buttonElement.textContent = buttonText;
+            }
         }
-
 
         // Inisialisasi
         continueButton.disabled = true;
