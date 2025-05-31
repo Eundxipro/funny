@@ -9,60 +9,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            font-family: 'Poppins', sans-serif; /* Mengganti font menjadi Poppins */
-            background-color: #f0f2f5; /* Latar belakang lebih netral */
-            color: #1c1e21; /* Warna teks Facebook-like */
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
             padding: 20px;
             margin: 0;
+            scroll-behavior: smooth; /* Untuk scrolling halus saat klik shortcut */
         }
         .container {
             background-color: #ffffff;
             padding: 32px;
-            border-radius: 12px; /* Border radius konsisten */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Shadow lebih halus */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 800px; /* Lebar untuk mengakomodasi grid card */
+            max-width: 800px;
             text-align: center;
         }
         .site-header {
             margin-bottom: 40px;
         }
         .site-header h1 {
-            font-size: 2.5rem; /* 40px */
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #3b82f6; /* Biru utama */
+            color: #3b82f6;
             margin-bottom: 8px;
         }
         .site-header p {
-            font-size: 1.125rem; /* 18px */
-            color: #6b7280; /* Abu-abu untuk tagline */
+            font-size: 1.125rem;
+            color: #6b7280;
             max-width: 600px;
             margin: 0 auto;
         }
-        h2 { /* Judul konten */
-            font-size: 2rem; /* 32px */
+        h2 { /* Judul konten utama */
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 12px; /* Disesuaikan agar dekat dengan shortcut */
             color: #3b82f6;
         }
-        h3 { /* Sub-judul untuk anomali dan romansa */
-            font-size: 1.5rem; /* 24px */
+        h3 { /* Sub-judul untuk setiap cerita/anomali */
+            font-size: 1.5rem;
             font-weight: 600;
-            color: #1f2937; /* Abu-abu gelap */
-            margin-top: 32px; /* Margin atas lebih besar untuk pemisah antar kisah/anomali */
+            color: #1f2937;
+            margin-top: 40px; /* Margin atas lebih besar untuk pemisah antar sub-bagian */
             margin-bottom: 12px;
             text-align: left;
-            border-bottom: 2px solid #e5e7eb; /* Garis bawah tipis untuk sub-judul */
-            padding-bottom: 8px; /* Padding bawah untuk garis */
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
         }
         /* Styling untuk kartu topik */
         .topic-card {
-            background-color: #f9fafb; /* Latar kartu sedikit abu-abu */
-            border: 1px solid #e5e7eb; /* Border halus */
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 24px;
             text-align: center;
@@ -71,34 +72,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Konten mulai dari atas */
-            min-height: 220px; /* Tinggi minimum kartu */
+            justify-content: flex-start;
+            min-height: 220px;
         }
         .topic-card:hover {
             transform: translateY(-5px) scale(1.03);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            border-color: #3b82f6; /* Border biru saat hover */
+            border-color: #3b82f6;
         }
         .card-icon-container {
-            font-size: 2.5rem; /* Ukuran ikon lebih besar */
-            color: #3b82f6; /* Warna ikon biru */
+            font-size: 2.5rem;
+            color: #3b82f6;
             margin-bottom: 16px;
             width: 60px;
             height: 60px;
-            background-color: #dbeafe; /* Latar belakang ikon biru muda */
+            background-color: #dbeafe;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .card-title {
-            font-size: 1.25rem; /* 20px */
+            font-size: 1.25rem;
             font-weight: 600;
             color: #111827;
             margin-bottom: 8px;
         }
         .card-tagline {
-            font-size: 0.875rem; /* 14px */
+            font-size: 0.875rem;
             color: #4b5563;
             line-height: 1.5;
         }
@@ -124,7 +125,7 @@
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            margin-top: 12px; /* Disesuaikan marginnya */
+            margin-top: 12px;
             margin-bottom: 12px;
             display: block;
             margin-left: auto;
@@ -140,35 +141,90 @@
         .content-text p, .content-text ul {
             margin-bottom: 1.25rem;
         }
-        .content-text ul {
+        .content-text ul:not(.sub-topic-shortcut-list) { /* Hanya untuk list utama, bukan shortcut */
             list-style-type: none;
             padding-left: 0;
         }
-        .content-text li {
+        .content-text li:not(.shortcut-item) { /* Hanya untuk list utama, bukan shortcut */
             margin-bottom: 0.75rem;
-            padding-left: 1.75em; /* Ruang lebih untuk ikon custom */
+            padding-left: 1.75em;
             position: relative;
         }
-        .content-text li::before {
-            content: "\f058"; /* Ikon check circle dari Font Awesome */
+        .content-text li:not(.shortcut-item)::before {
+            content: "\f058"; 
             font-family: "Font Awesome 6 Free";
-            font-weight: 900; /* Solid icon */
+            font-weight: 900; 
             position: absolute;
             left: 0;
-            color: #3b82f6; /* Warna ikon biru */
+            color: #3b82f6;
             font-size: 1em;
         }
+
+        /* Styling untuk shortcut di dalam konten */
+        .sub-topic-shortcuts {
+            margin-top: 0px; /* Dekatkan dengan judul H2 */
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        .sub-topic-shortcuts h4 { /* Judul "Pintasan Konten" */
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #dbeafe;
+        }
+        .sub-topic-shortcut-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .sub-topic-shortcut-list .shortcut-item {
+            margin-bottom: 8px;
+            padding-left: 0; /* Reset padding-left dari li umum */
+        }
+        .sub-topic-shortcut-list .shortcut-item::before { /* Hapus ::before dari li umum */
+            display: none;
+        }
+        .sub-topic-shortcut-list .shortcut-item a {
+            text-decoration: none;
+            color: #1f2937;
+            display: block;
+            padding: 10px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            font-size: 0.95rem;
+        }
+        .sub-topic-shortcut-list .shortcut-item a:hover {
+            background-color: #e0e7ff;
+            color: #3b82f6;
+            transform: translateX(3px);
+        }
+        .sub-topic-shortcut-list .shortcut-item a strong {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .sub-topic-shortcut-list .shortcut-item .shortcut-subtitle {
+            font-size: 0.8rem;
+            color: #6b7280;
+            display: block; /* Agar di baris baru jika terlalu panjang */
+            margin-top: 2px;
+        }
+
         .hidden {
             display: none !important;
         }
         #topicGrid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Kartu sedikit lebih lebar */
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 24px;
             margin-bottom: 32px;
         }
         .screen {
-            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animasi lebih halus */
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -215,32 +271,59 @@
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
                 bodyHTML: `
-                    <h3>Kisah #1: Pertemuan di Praktikum Jagung</h3>
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
-                    <p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
+                    <div class="sub-topic-shortcuts">
+                        <h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4>
+                        <ul class="sub-topic-shortcut-list">
+                            <li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li>
+                            <li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div id="romansa-kisah-1">
+                        <h3>Kisah #1: Pertemuan di Praktikum Jagung</h3>
+                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
+                        <p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
+                    </div>
                     
-                    <h3>Kisah #2: Momen Lain di Kebun?</h3>
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image">
-                    <p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>
+                    <div id="romansa-kisah-2">
+                        <h3>Kisah #2: Momen Lain di Kebun?</h3>
+                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image">
+                        <p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>
+                    </div>
                 `
             },
             "anomali": {
                 title: "Anomali Mahasiswa: Fakta Unik & Mengejutkan!",
                 bodyHTML: `
+                    <div class="sub-topic-shortcuts">
+                        <h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Anomali:</h4>
+                        <ul class="sub-topic-shortcut-list">
+                            <li class="shortcut-item"><a href="#anomali-1"><strong>Anomali #1:</strong> <span class="shortcut-subtitle">Spesies Baru? Mahasiswa SmT 6 Beraksi!</span></a></li>
+                            <li class="shortcut-item"><a href="#anomali-2"><strong>Anomali #2:</strong> <span class="shortcut-subtitle">Sang Penguasa Jagung, KING VEDA!</span></a></li>
+                            <li class="shortcut-item"><a href="#anomali-3"><strong>Anomali #3:</strong> <span class="shortcut-subtitle">Self-Reward Level Dewa ke Puncak Batur!</span></a></li>
+                        </ul>
+                    </div>
+
                     <p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p>
                     
-                    <h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3>
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image">
-                    <p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p>
-                    <p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>
+                    <div id="anomali-1">
+                        <h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3>
+                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image">
+                        <p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p>
+                        <p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>
+                    </div>
 
-                    <h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3>
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image">
-                    <p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>
+                    <div id="anomali-2">
+                        <h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3>
+                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image">
+                        <p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>
+                    </div>
                     
-                    <h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3>
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image">
-                    <p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>
+                    <div id="anomali-3">
+                        <h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3>
+                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image">
+                        <p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>
+                    </div>
                     
                     <p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p>
                     <ul>
