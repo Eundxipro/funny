@@ -6,6 +6,7 @@
     <title>Siapa Secret Admirer Kamu & Kejutan Spesial!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVXM5RdhCRK0B3TUmrQAATGHCVARg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -130,7 +131,7 @@
             font-size: 3rem; /* Ukuran ikon besar */
             margin-bottom: 16px;
         }
-        #copyNotification {
+        #copyNotification { /* Digunakan juga untuk notifikasi screenshot */
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -142,10 +143,11 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
         }
         #copyNotification.show {
             opacity: 1;
+            bottom: 40px; /* Naikkan sedikit saat muncul */
         }
     </style>
 </head>
@@ -182,7 +184,7 @@
             <p>Kamu dianugerahi gelar kehormatan:</p>
             <div class="title-text">SUPER KING</div>
             <p>oleh King Veda!</p>
-            <button class="btn btn-share" onclick="sharePrank()">Bagikan Gelar Ini!</button>
+            <button id="shareTitleButton" class="btn btn-share" onclick="shareTitleAsImage()">Bagikan Gelar Ini!</button>
             <button class="btn btn-secondary" onclick="tryAgain()">Coba Lagi dari Awal?</button>
         </div>
 
@@ -190,18 +192,19 @@
         <div id="copyNotification" class="hidden">Link berhasil disalin!</div>
     </div>
 
-    <input type="text" id="shareLinkInput" style="position: absolute; left: -9999px;">
+    <input type="text" id="shareLinkInput" style="position: absolute; left: -9999px; top: -9999px;">
 
     <script>
         const genderSelectionScreen = document.getElementById('genderSelectionScreen');
         const calculatingScreen = document.getElementById('calculatingScreen');
         const prankScreen = document.getElementById('prankScreen');
-        const superKingScreen = document.getElementById('superKingScreen'); // Layar baru
+        const superKingScreen = document.getElementById('superKingScreen');
         const continueButton = document.getElementById('continueButton');
         const maleButton = document.getElementById('maleButton');
         const femaleButton = document.getElementById('femaleButton');
         const copyNotification = document.getElementById('copyNotification');
-        const shareLinkInput = document.getElementById('shareLinkInput');
+        const shareLinkInput = document.getElementById('shareLinkInput'); // Tetap ada jika diperlukan di masa depan
+        const shareTitleButton = document.getElementById('shareTitleButton');
 
         let selectedGender = null;
 
@@ -215,27 +218,21 @@
                 maleButton.classList.remove('selected');
             }
             continueButton.disabled = false;
-            // Tidak perlu .classList.replace jika hanya memastikan kelas ada
-            // continueButton.classList.replace('btn-primary', 'btn-primary'); 
         }
 
         function showCalculating() {
             if (!selectedGender) {
-                // Seharusnya tidak terjadi karena tombol lanjut di-disable
-                // Mengganti alert dengan notifikasi custom jika diinginkan, tapi untuk error internal alert masih ok.
-                // Untuk pengalaman pengguna yang lebih baik, bisa dibuatkan modal custom.
-                // Namun, karena tombol continueButton di-disable, ini seharusnya tidak terpicu.
                 console.error('Pilihan gender tidak ada saat showCalculating dipanggil.');
+                showGeneralNotification("Pilih gender dulu ya!", true); // Notifikasi error
                 return;
             }
             genderSelectionScreen.classList.add('hidden');
             calculatingScreen.classList.remove('hidden');
 
-            // Simulasi kalkulasi
             setTimeout(() => {
                 calculatingScreen.classList.add('hidden');
-                prankScreen.classList.remove('hidden'); // Tampilkan layar Veda dulu
-            }, 2000); // Tunggu 2 detik
+                prankScreen.classList.remove('hidden');
+            }, 2000);
         }
 
         function showSuperKingScreen() {
@@ -245,51 +242,118 @@
 
         function tryAgain() {
             prankScreen.classList.add('hidden');
-            superKingScreen.classList.add('hidden'); // Sembunyikan juga layar super king
+            superKingScreen.classList.add('hidden');
             genderSelectionScreen.classList.remove('hidden');
             
-            // Reset pilihan gender
             selectedGender = null;
             maleButton.classList.remove('selected');
             femaleButton.classList.remove('selected');
             continueButton.disabled = true;
+            shareTitleButton.disabled = false; // Aktifkan kembali tombol share jika di-disable saat proses
+            shareTitleButton.textContent = "Bagikan Gelar Ini!";
         }
 
-        function sharePrank() {
-            const urlToCopy = window.location.href;
-            shareLinkInput.value = urlToCopy;
-            shareLinkInput.select();
-            try {
-                document.execCommand('copy');
-                showCopyNotification('Link berhasil disalin!');
-            } catch (err) {
-                showCopyNotification('Gagal menyalin link.');
-                console.error('Gagal menyalin link: ', err);
-            }
-            // Untuk membersihkan seleksi
-            if (window.getSelection) {
-              if (window.getSelection().empty) {  // Chrome
-                window.getSelection().empty();
-              } else if (window.getSelection().removeAllRanges) {  // Firefox
-                window.getSelection().removeAllRanges();
-              }
-            } else if (document.selection) {  // IE?
-              document.selection.empty();
-            }
-        }
-
-        function showCopyNotification(message) {
+        // Fungsi notifikasi yang lebih umum
+        function showGeneralNotification(message, isError = false) {
             copyNotification.textContent = message;
+            if (isError) {
+                copyNotification.style.backgroundColor = '#ef4444'; // Merah untuk error
+            } else {
+                copyNotification.style.backgroundColor = '#1f2937'; // Default
+            }
             copyNotification.classList.add('show');
             setTimeout(() => {
                 copyNotification.classList.remove('show');
-            }, 2000);
+                 // Reset background color after hiding
+                setTimeout(() => { copyNotification.style.backgroundColor = '#1f2937'; }, 500);
+            }, 3000); // Tampilkan notifikasi lebih lama
+        }
+        
+        async function shareTitleAsImage() {
+            shareTitleButton.disabled = true;
+            shareTitleButton.textContent = "Memproses Screenshot...";
+
+            try {
+                const elementToCapture = document.getElementById('superKingScreen');
+                if (!elementToCapture) {
+                    showGeneralNotification("Elemen untuk screenshot tidak ditemukan.", true);
+                    resetShareButton();
+                    return;
+                }
+
+                // Sembunyikan sementara tombol agar tidak masuk screenshot
+                const buttonsToHide = elementToCapture.querySelectorAll('button');
+                buttonsToHide.forEach(btn => btn.style.visibility = 'hidden');
+
+                const canvas = await html2canvas(elementToCapture, {
+                    scale: window.devicePixelRatio * 1.5, // Tingkatkan skala untuk kualitas lebih baik
+                    useCORS: true, // Untuk font eksternal jika ada
+                    logging: false, // Set true untuk debug html2canvas
+                     // Abaikan elemen notifikasi jika terlihat
+                    ignoreElements: (element) => element.id === 'copyNotification'
+                });
+
+                // Kembalikan visibilitas tombol
+                buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
+                
+                const dataUrl = canvas.toDataURL('image/png');
+
+                // Konversi Data URL ke Blob lalu ke File
+                const blob = await fetch(dataUrl).then(res => res.blob());
+                const imageFile = new File([blob], "gelar-super-king.png", { type: "image/png" });
+
+                if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+                    await navigator.share({
+                        files: [imageFile],
+                        title: 'Gelar Super King!',
+                        text: 'Wow! Aku dapat gelar SUPER KING dari King Veda! 🥳',
+                    });
+                    showGeneralNotification('Berhasil dibagikan!');
+                    resetShareButton();
+                } else {
+                    // Fallback jika Web Share API tidak didukung untuk file
+                    fallbackShare(dataUrl);
+                }
+            } catch (error) {
+                console.error('Error saat mengambil atau membagikan screenshot:', error);
+                showGeneralNotification('Gagal membuat atau membagikan screenshot.', true);
+                // Kembalikan visibilitas tombol jika error terjadi di tengah proses
+                const elementToCapture = document.getElementById('superKingScreen');
+                if (elementToCapture) {
+                    const buttonsToHide = elementToCapture.querySelectorAll('button');
+                    buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
+                }
+                resetShareButton();
+            }
         }
 
-        // Inisialisasi: disable tombol lanjut sampai gender dipilih
+        function fallbackShare(dataUrl) {
+            // 1. Trigger download gambar
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'gelar-super-king.png';
+            document.body.appendChild(link); // Diperlukan untuk Firefox
+            link.click();
+            document.body.removeChild(link); // Bersihkan setelah diklik
+
+            // 2. Buka WhatsApp dengan pesan
+            const waMessage = encodeURIComponent(`Aku baru saja dapat gelar SUPER KING dari King Veda! 👑 Aku kirim screenshotnya ya. Penasaran? Coba juga prank ini: ${window.location.href}`);
+            window.open(`https://api.whatsapp.com/send?text=${waMessage}`, '_blank');
+
+            // 3. Notifikasi ke pengguna
+            showGeneralNotification("Screenshot diunduh. Buka WhatsApp & lampirkan gambarnya!");
+            resetShareButton();
+        }
+
+        function resetShareButton() {
+            shareTitleButton.disabled = false;
+            shareTitleButton.textContent = "Bagikan Gelar Ini!";
+        }
+
+
+        // Inisialisasi
         continueButton.disabled = true;
-        // Ganti nama fungsi yang dipanggil oleh tombol Lanjut dari pemilihan gender
-        // continueButton.onclick = showCalculating; // Ini sudah diatur di HTML
+
     </script>
 </body>
 </html>
