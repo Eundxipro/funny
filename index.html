@@ -3,142 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisah Kampus: Fakta & Cerita Seru!</title>
+    <title>Kisah Kampus: Jelajahi Fakta & Cerita Seru!</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #eef2f7; /* Latar belakang sedikit lebih cerah */
-            color: #1a202c; /* Warna teks utama lebih gelap */
+            font-family: 'Poppins', sans-serif; /* Mengganti font menjadi Poppins */
+            background-color: #f0f2f5; /* Latar belakang lebih netral */
+            color: #1c1e21; /* Warna teks Facebook-like */
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
             padding: 20px;
             margin: 0;
-            transition: background-color 0.5s ease; /* Transisi halus untuk body */
         }
         .container {
-            background-color: white;
-            padding: 28px; /* Sedikit lebih banyak padding */
-            border-radius: 16px; /* Border radius lebih besar */
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12); /* Shadow lebih menonjol */
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 12px; /* Border radius konsisten */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Shadow lebih halus */
             width: 100%;
-            max-width: 768px; /* Lebar kontainer diperluas sedikit */
+            max-width: 800px; /* Lebar untuk mengakomodasi grid card */
             text-align: center;
-            transition: transform 0.3s ease-out; /* Transisi untuk container */
         }
-        h1 {
-            font-size: 2.25rem; /* 36px, lebih besar */
+        .site-header {
+            margin-bottom: 40px;
+        }
+        .site-header h1 {
+            font-size: 2.5rem; /* 40px */
             font-weight: 700;
-            margin-bottom: 32px; /* Jarak bawah lebih besar */
-            color: #2d3748; /* Warna judul sedikit lebih lembut */
+            color: #3b82f6; /* Biru utama */
+            margin-bottom: 8px;
         }
-        h2 {
-            font-size: 1.875rem; /* 30px, lebih besar */
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #2d3748;
+        .site-header p {
+            font-size: 1.125rem; /* 18px */
+            color: #6b7280; /* Abu-abu untuk tagline */
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .topic-btn {
-            background-image: linear-gradient(to right, #4f46e5, #7c3aed); /* Gradient untuk tombol */
-            color: white;
-            padding: 20px; /* Padding lebih besar */
-            border-radius: 10px; /* Border radius lebih besar */
+        h2 { /* Judul konten */
+            font-size: 2rem; /* 32px */
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease; /* Transisi lebih komprehensif */
+            margin-bottom: 24px;
+            color: #3b82f6;
+        }
+        /* Styling untuk kartu topik */
+        .topic-card {
+            background-color: #f9fafb; /* Latar kartu sedikit abu-abu */
+            border: 1px solid #e5e7eb; /* Border halus */
+            border-radius: 12px;
+            padding: 24px;
             text-align: center;
-            width: 100%;
-            font-size: 1.15rem; /* Font sedikit lebih besar */
-            display: flex; /* Untuk ikon dan teks */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center; /* Pusatkan konten tombol */
-            gap: 10px; /* Jarak antara ikon dan teks */
-            border: none; /* Hilangkan border default */
+            justify-content: flex-start; /* Konten mulai dari atas */
+            min-height: 220px; /* Tinggi minimum kartu */
         }
-        .topic-btn:hover {
-            background-image: linear-gradient(to right, #4338ca, #6d28d9); /* Gradient lebih gelap saat hover */
-            transform: translateY(-3px) scale(1.02); /* Efek hover lebih dinamis */
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        .topic-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6; /* Border biru saat hover */
         }
-        .topic-btn i { /* Styling untuk ikon */
-            font-size: 1.3em; /* Ukuran ikon relatif terhadap font tombol */
+        .card-icon-container {
+            font-size: 2.5rem; /* Ukuran ikon lebih besar */
+            color: #3b82f6; /* Warna ikon biru */
+            margin-bottom: 16px;
+            width: 60px;
+            height: 60px;
+            background-color: #dbeafe; /* Latar belakang ikon biru muda */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-title {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .card-tagline {
+            font-size: 0.875rem; /* 14px */
+            color: #4b5563;
+            line-height: 1.5;
         }
         .btn-secondary {
-            background-color: #4a5568; /* Warna tombol kembali lebih gelap */
+            background-color: #6b7280;
             color: white;
-            padding: 12px 24px; /* Padding disesuaikan */
+            padding: 12px 24px;
             border-radius: 8px;
-            font-weight: 500; /* Font weight sedikit lebih ringan */
+            font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            display: inline-flex; /* Untuk ikon */
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 24px;
             border: none;
         }
         .btn-secondary:hover {
-            background-color: #2d3748; /* Warna hover lebih gelap */
+            background-color: #4b5563;
             transform: translateY(-2px);
         }
         .content-image {
             max-width: 100%;
             height: auto;
-            border-radius: 12px; /* Border radius lebih besar untuk gambar */
+            border-radius: 12px;
             margin-top: 20px;
             margin-bottom: 20px;
             display: block;
             margin-left: auto;
             margin-right: auto;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2); /* Shadow gambar lebih jelas */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
         .content-text {
             text-align: left;
-            line-height: 1.8; /* Line height lebih besar untuk kenyamanan baca */
-            color: #4a5568; /* Warna teks konten lebih lembut */
-            font-size: 1.05rem; /* Font sedikit lebih besar */
+            line-height: 1.8;
+            color: #374151;
+            font-size: 1rem;
         }
         .content-text p, .content-text ul {
-            margin-bottom: 1.25rem; /* Jarak antar paragraf/list lebih besar */
+            margin-bottom: 1.25rem;
         }
         .content-text ul {
-            list-style-type: none; /* Hapus bullet default */
+            list-style-type: none;
             padding-left: 0;
         }
         .content-text li {
             margin-bottom: 0.75rem;
-            padding-left: 1.5em; /* Ruang untuk ikon custom */
+            padding-left: 1.75em; /* Ruang lebih untuk ikon custom */
             position: relative;
         }
-        .content-text li::before { /* Custom bullet point dengan Font Awesome */
-            content: "\f138"; /* Ikon panah kanan dari Font Awesome */
+        .content-text li::before {
+            content: "\f058"; /* Ikon check circle dari Font Awesome */
             font-family: "Font Awesome 6 Free";
-            font-weight: 900;
+            font-weight: 900; /* Solid icon */
             position: absolute;
             left: 0;
-            color: #7c3aed; /* Warna ikon ungu */
-            font-size: 0.9em;
+            color: #3b82f6; /* Warna ikon biru */
+            font-size: 1em;
         }
         .hidden {
-            display: none !important; /* Pastikan hidden benar-benar menyembunyikan */
+            display: none !important;
         }
         #topicGrid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Lebar minimum tombol lebih besar */
-            gap: 20px; /* Jarak antar tombol lebih besar */
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Kartu sedikit lebih lebar */
+            gap: 24px;
             margin-bottom: 32px;
         }
-
-        /* Animasi untuk perpindahan layar */
         .screen {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Animasi lebih halus */
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -146,13 +169,16 @@
 <body>
     <div class="container">
         <div id="topicSelectionScreen" class="screen">
-            <h1><i class="fas fa-book-open-reader" style="color: #7c3aed;"></i> Jelajahi Kisah Kampus!</h1>
+            <div class="site-header">
+                <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Kisah Kampus Kita</h1>
+                <p>Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!</p>
+            </div>
             <div id="topicGrid">
                 </div>
         </div>
 
         <div id="contentDisplayScreen" class="hidden screen">
-            <button id="backToTopicsButton" class="btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <button id="backToTopicsButton" class="btn-secondary"><i class="fas fa-chevron-left"></i> Kembali ke Topik</button>
             <h2 id="contentTitle"></h2>
             <div id="contentBody" class="content-text">
                 </div>
@@ -168,94 +194,55 @@
         const backToTopicsButton = document.getElementById('backToTopicsButton');
 
         const topics = [
-            { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heart" },
-            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-microscope" }, // Mengganti ikon
-            { key: "gamer", name: "Dunia Gamer Kampus", icon: "fas fa-gamepad" },
-            { key: "tugas", name: "Info Tugas Kuliah", icon: "fas fa-tasks" },
-            { key: "fyi", name: "FYI Terkini", icon: "fas fa-bullhorn" }
+            { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat", tagline: "Debar cinta & pertemuan tak terlupakan di tengah hiruk pikuk akademis." },
+            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-microscope", tagline: "Kejadian 'luar biasa' yang hanya anak kampus yang paham." },
+            { key: "gamer", name: "Arena Gamer", icon: "fas fa-headset", tagline: "Dari noob hingga pro, kisah gamer kampus yang seru!" },
+            { key: "tugas", name: "Pejuang Deadline", icon: "fas fa-hourglass-half", tagline: "Tips & trik taklukkan tugas, sebelum bendera kuning berkibar!" },
+            { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
         ];
 
         const contentData = {
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
-                bodyHTML: `
-                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
-                    <p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
-                `
+                bodyHTML: `<img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>`
             },
             "anomali": {
                 title: "Anomali Mahasiswa: Fakta Unik & Mengejutkan!",
-                bodyHTML: `
-                    <p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p>
-                    <p><strong>Contoh Anomali (Segera Hadir):</strong></p>
-                    <ul>
-                        <li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li>
-                        <li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li>
-                        <li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li>
-                    </ul>
-                    <p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>
-                `
+                bodyHTML: `<p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p> <p><strong>Contoh Anomali (Segera Hadir):</strong></p><ul><li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li><li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li><li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li></ul><p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>`
             },
             "gamer": {
                 title: "Arena Gamer Kampus Pertanian: Lebih dari Sekadar Cangkul!",
-                bodyHTML: `
-                    <p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p>
-                    <p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p>
-                    <p><strong>Update Terbaru (Segera Hadir):</strong></p>
-                    <ul>
-                        <li>Jadwal Turnamen E-Sport Antar Angkatan.</li>
-                        <li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li>
-                        <li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li>
-                    </ul>
-                `
+                bodyHTML: `<p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p><p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p><p><strong>Update Terbaru (Segera Hadir):</strong></p><ul><li>Jadwal Turnamen E-Sport Antar Angkatan.</li><li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li><li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li></ul>`
             },
             "tugas": {
                 title: "Info Tugas Kuliah & Deadline Pertanian: Anti Panik!",
-                bodyHTML: `
-                    <p>Mahasiswa dan deadline itu dua sejoli yang tak terpisahkan. Biar nggak kelabakan, yuk simak rangkuman tugas-tugas 'keramat' dan tanggal pentingnya di Fakultas Pertanian:</p>
-                    <ul>
-                        <li>Laporan Praktikum Urban Farming: <em>Perhatikan format dan analisis data!</em></li>
-                        <li>Makalah Produksi Tanaman Hortikultura: <em>Kajian literatur mendalam adalah kunci.</em></li>
-                        <li>Presentasi Zat Pengatur Tumbuh: <em>Siapkan slide yang menarik dan kuasai materi.</em></li>
-                        <li>Proposal Penelitian Tanaman Industri: <em>Inovasi dan metodologi yang kuat jadi nilai plus.</em></li>
-                        <li>Ujian Akhir Semester Statistika: <em>Latihan soal sebanyak-banyaknya!</em></li>
-                    </ul>
-                    <p><strong>Pro-Tip:</strong> Jangan tunda pekerjaan, buat jadwal, dan jangan ragu diskusi dengan teman atau asisten dosen. Semangat!</p>
-                    <p>(Kumpulan contoh laporan, format slide, dan bank soal akan segera kami unggah!)</p>
-                `
+                bodyHTML: `<p>Mahasiswa dan deadline itu dua sejoli yang tak terpisahkan. Biar nggak kelabakan, yuk simak rangkuman tugas-tugas 'keramat' dan tanggal pentingnya di Fakultas Pertanian:</p><ul><li>Laporan Praktikum Urban Farming: <em>Perhatikan format dan analisis data!</em></li><li>Makalah Produksi Tanaman Hortikultura: <em>Kajian literatur mendalam adalah kunci.</em></li><li>Presentasi Zat Pengatur Tumbuh: <em>Siapkan slide yang menarik dan kuasai materi.</em></li><li>Proposal Penelitian Tanaman Industri: <em>Inovasi dan metodologi yang kuat jadi nilai plus.</em></li><li>Ujian Akhir Semester Statistika: <em>Latihan soal sebanyak-banyaknya!</em></li></ul><p><strong>Pro-Tip:</strong> Jangan tunda pekerjaan, buat jadwal, dan jangan ragu diskusi dengan teman atau asisten dosen. Semangat!</p><p>(Kumpulan contoh laporan, format slide, dan bank soal akan segera kami unggah!)</p>`
             },
             "fyi": {
                 title: "FYI Terkini: Jangan Sampai Ketinggalan Info Penting Kampus Pertanian!",
-                bodyHTML: `
-                    <p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p>
-                    <ul>
-                        <li>Jadwal Seminar & Workshop Terbaru.</li>
-                        <li>Informasi Beasiswa yang Sedang Dibuka.</li>
-                        <li>Lowongan Asisten Dosen atau Asisten Praktikum.</li>
-                        <li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li>
-                        <li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li>
-                    </ul>
-                    <p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>
-                `
+                bodyHTML: `<p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p><ul><li>Jadwal Seminar & Workshop Terbaru.</li><li>Informasi Beasiswa yang Sedang Dibuka.</li><li>Lowongan Asisten Dosen atau Asisten Praktikum.</li><li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li><li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li></ul><p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>`
             }
         };
 
-        function populateTopicButtons() {
+        function populateTopicCards() {
             topicGrid.innerHTML = '';
             topics.forEach(topic => {
-                const button = document.createElement('button');
-                button.classList.add('topic-btn');
-                button.setAttribute('data-topic', topic.key);
-                // Tambahkan ikon ke tombol
-                button.innerHTML = `<i class="${topic.icon}"></i> ${topic.name}`;
-                topicGrid.appendChild(button);
+                const card = document.createElement('div');
+                card.classList.add('topic-card');
+                card.setAttribute('data-topic', topic.key);
+                card.innerHTML = `
+                    <div class="card-icon-container"><i class="${topic.icon}"></i></div>
+                    <h3 class="card-title">${topic.name}</h3>
+                    <p class="card-tagline">${topic.tagline}</p>
+                `;
+                topicGrid.appendChild(card);
             });
         }
 
         topicGrid.addEventListener('click', function(event) {
-            const clickedButton = event.target.closest('.topic-btn'); // Lebih aman untuk klik di ikon
-            if (clickedButton) {
-                const topicKey = clickedButton.getAttribute('data-topic');
+            const clickedCard = event.target.closest('.topic-card');
+            if (clickedCard) {
+                const topicKey = clickedCard.getAttribute('data-topic');
                 loadContent(topicKey);
             }
         });
@@ -263,36 +250,37 @@
         backToTopicsButton.addEventListener('click', function() {
             contentDisplayScreen.classList.add('hidden');
             topicSelectionScreen.classList.remove('hidden');
-            topicSelectionScreen.style.animation = 'fadeIn 0.5s ease-out'; // Re-apply animation
+            topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             contentTitle.innerHTML = "";
             contentBody.innerHTML = "";
         });
 
         function loadContent(topicKey) {
             const topicContent = contentData[topicKey]; 
-            if (topicContent) {
-                contentTitle.innerHTML = `<i class="${topics.find(t => t.key === topicKey).icon}" style="color: #7c3aed; margin-right: 10px;"></i>${topicContent.title}`; // Tambah ikon di judul konten
+            const topicMeta = topics.find(t => t.key === topicKey);
+            if (topicContent && topicMeta) {
+                contentTitle.innerHTML = `<i class="${topicMeta.icon}" style="margin-right: 10px;"></i>${topicContent.title}`;
                 contentBody.innerHTML = topicContent.bodyHTML;
                 
                 topicSelectionScreen.classList.add('hidden');
                 contentDisplayScreen.classList.remove('hidden');
-                contentDisplayScreen.style.animation = 'fadeIn 0.5s ease-out'; // Apply animation
+                contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
             } else {
-                console.error("Konten untuk topik tidak ditemukan:", topicKey);
-                contentTitle.textContent = "Konten Tidak Ditemukan";
+                console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
+                contentTitle.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>Konten Tidak Ditemukan`;
                 contentBody.innerHTML = "<p>Maaf, konten untuk topik ini belum tersedia atau tidak ditemukan. Silakan coba topik lain.</p>";
                 
                 topicSelectionScreen.classList.add('hidden');
                 contentDisplayScreen.classList.remove('hidden');
-                contentDisplayScreen.style.animation = 'fadeIn 0.5s ease-out';
+                contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            populateTopicButtons();
-            topicSelectionScreen.style.animation = 'fadeIn 0.5s ease-out'; // Animasi awal
+            populateTopicCards(); // Mengganti nama fungsi agar sesuai
+            topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
         });
     </script>
 </body>
