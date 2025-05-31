@@ -49,6 +49,16 @@
             margin-bottom: 24px;
             color: #3b82f6;
         }
+        h3 { /* Sub-judul untuk anomali dan romansa */
+            font-size: 1.5rem; /* 24px */
+            font-weight: 600;
+            color: #1f2937; /* Abu-abu gelap */
+            margin-top: 32px; /* Margin atas lebih besar untuk pemisah antar kisah/anomali */
+            margin-bottom: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb; /* Garis bawah tipis untuk sub-judul */
+            padding-bottom: 8px; /* Padding bawah untuk garis */
+        }
         /* Styling untuk kartu topik */
         .topic-card {
             background-color: #f9fafb; /* Latar kartu sedikit abu-abu */
@@ -114,8 +124,8 @@
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 12px; /* Disesuaikan marginnya */
+            margin-bottom: 12px;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -195,7 +205,7 @@
 
         const topics = [
             { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat", tagline: "Debar cinta & pertemuan tak terlupakan di tengah hiruk pikuk akademis." },
-            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-microscope", tagline: "Kejadian 'luar biasa' yang hanya anak kampus yang paham." },
+            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-ghost", tagline: "Kejadian 'luar biasa' yang hanya anak kampus yang paham." },
             { key: "gamer", name: "Arena Gamer", icon: "fas fa-headset", tagline: "Dari noob hingga pro, kisah gamer kampus yang seru!" },
             { key: "tugas", name: "Pejuang Deadline", icon: "fas fa-hourglass-half", tagline: "Tips & trik taklukkan tugas, sebelum bendera kuning berkibar!" },
             { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
@@ -204,11 +214,42 @@
         const contentData = {
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
-                bodyHTML: `<img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>`
+                bodyHTML: `
+                    <h3>Kisah #1: Pertemuan di Praktikum Jagung</h3>
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
+                    <p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
+                    
+                    <h3>Kisah #2: Momen Lain di Kebun?</h3>
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image">
+                    <p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>
+                `
             },
             "anomali": {
                 title: "Anomali Mahasiswa: Fakta Unik & Mengejutkan!",
-                bodyHTML: `<p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p> <p><strong>Contoh Anomali (Segera Hadir):</strong></p><ul><li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li><li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li><li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li></ul><p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>`
+                bodyHTML: `
+                    <p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p>
+                    
+                    <h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3>
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image">
+                    <p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p>
+                    <p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>
+
+                    <h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3>
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image">
+                    <p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>
+                    
+                    <h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3>
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image">
+                    <p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>
+                    
+                    <p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p>
+                    <ul>
+                        <li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li>
+                        <li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li>
+                        <li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li>
+                    </ul>
+                    <p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>
+                `
             },
             "gamer": {
                 title: "Arena Gamer Kampus Pertanian: Lebih dari Sekadar Cangkul!",
@@ -259,7 +300,7 @@
             const topicContent = contentData[topicKey]; 
             const topicMeta = topics.find(t => t.key === topicKey);
             if (topicContent && topicMeta) {
-                contentTitle.innerHTML = `<i class="${topicMeta.icon}" style="margin-right: 10px;"></i>${topicContent.title}`;
+                contentTitle.innerHTML = `<i class="${topicMeta.icon}" style="margin-right: 10px; color: #3b82f6;"></i>${topicContent.title}`;
                 contentBody.innerHTML = topicContent.bodyHTML;
                 
                 topicSelectionScreen.classList.add('hidden');
@@ -268,7 +309,7 @@
                 window.scrollTo(0, 0);
             } else {
                 console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
-                contentTitle.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>Konten Tidak Ditemukan`;
+                contentTitle.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 10px; color: #ef4444;"></i>Konten Tidak Ditemukan`;
                 contentBody.innerHTML = "<p>Maaf, konten untuk topik ini belum tersedia atau tidak ditemukan. Silakan coba topik lain.</p>";
                 
                 topicSelectionScreen.classList.add('hidden');
@@ -279,7 +320,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            populateTopicCards(); // Mengganti nama fungsi agar sesuai
+            populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
         });
     </script>
