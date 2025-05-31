@@ -64,7 +64,7 @@
             font-size: 1.25rem;
             font-weight: 600;
             color: #1f2937;
-            margin-top: 20px; /* Disesuaikan agar tidak terlalu jauh dari konten sub-topik */
+            margin-top: 20px; 
             margin-bottom: 15px;
             text-align: left;
         }
@@ -221,16 +221,16 @@
         }
         /* Comment Section Styling per Sub-Topic */
         .sub-topic-comment-section {
-            margin-top: 25px; /* Jarak dari konten sub-topik di atasnya */
+            margin-top: 25px; 
             padding-top: 15px;
-            border-top: 1px solid #e0e7ff; /* Border pemisah lebih lembut */
+            border-top: 1px solid #e0e7ff; 
             text-align: left;
         }
         .comment-list {
-            max-height: 300px; /* Disesuaikan agar tidak terlalu panjang per sub-topik */
+            max-height: 300px; 
             overflow-y: auto;
             margin-bottom: 15px;
-            padding-right: 10px; /* For scrollbar visibility */
+            padding-right: 10px; 
         }
         .comment-item {
             background-color: #f9fafb;
@@ -257,7 +257,7 @@
             margin-top: 5px;
             text-align: right;
         }
-        .comment-form textarea { /* Menggunakan class agar bisa multiple */
+        .comment-form textarea { 
             width: 100%;
             padding: 8px;
             border-radius: 6px;
@@ -267,7 +267,7 @@
             font-size: 0.9rem;
             resize: vertical;
         }
-        .comment-form button { /* Menggunakan class */
+        .comment-form button { 
             background-color: #3b82f6;
             color: white;
             padding: 8px 16px;
@@ -290,6 +290,7 @@
             text-align: center;
             padding: 15px;
             font-size: 0.9rem;
+            /* display: none; /* Initially hidden, shown by JS if needed */
         }
 
         .hidden {
@@ -336,7 +337,7 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         let db, auth;
-        let activeCommentListeners = {}; // Untuk menyimpan multiple unsubscribe functions
+        let activeCommentListeners = {}; 
 
         const topicSelectionScreen = document.getElementById('topicSelectionScreen');
         const contentDisplayScreen = document.getElementById('contentDisplayScreen');
@@ -353,14 +354,13 @@
             { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
         ];
 
-        // Fungsi untuk membuat struktur HTML bagian komentar
         function createCommentSectionHTML(subTopicId) {
             return `
                 <div class="sub-topic-comment-section" id="comment-section-${subTopicId}">
                     <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
                     <div id="comment-list-${subTopicId}" class="comment-list">
-                        <p class="no-comments" id="no-comments-${subTopicId}">Memuat komentar...</p>
-                    </div>
+                        </div>
+                    <p class="no-comments" id="no-comments-${subTopicId}" style="display: block;">Memuat komentar...</p> 
                     <form class="comment-form" data-subtopicid="${subTopicId}">
                         <textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea>
                         <button type="submit">Kirim Komentar</button>
@@ -420,6 +420,7 @@
                 } else {
                     await signInAnonymously(auth);
                 }
+                console.log("Firebase initialized and user signed in:", auth.currentUser ? auth.currentUser.uid : "No user");
                 return true;
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
@@ -451,7 +452,6 @@
         });
 
         backToTopicsButton.addEventListener('click', function() {
-            // Unsubscribe from all active comment listeners
             Object.values(activeCommentListeners).forEach(unsubscribe => unsubscribe());
             activeCommentListeners = {};
 
@@ -466,7 +466,6 @@
             const topicContent = contentData[topicKey]; 
             const topicMeta = topics.find(t => t.key === topicKey);
 
-            // Clear previous listeners
             Object.values(activeCommentListeners).forEach(unsubscribe => unsubscribe());
             activeCommentListeners = {};
 
@@ -479,27 +478,31 @@
                 contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
 
-                const commentForms = contentBody.querySelectorAll('.comment-form');
-                commentForms.forEach(form => {
-                    const subTopicId = form.dataset.subtopicid;
-                    const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
-                    const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
+                // Ensure DOM is ready for comment forms
+                setTimeout(() => {
+                    const commentForms = contentBody.querySelectorAll('.comment-form');
+                    commentForms.forEach(form => {
+                        const subTopicId = form.dataset.subtopicid;
+                        const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+                        const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
 
-                    if (db && auth.currentUser) {
-                         loadCommentsForSubTopic(subTopicId);
-                         // Remove previous listener if any, then add new one
-                         const newForm = form.cloneNode(true); // Clone to remove old listeners
-                         form.parentNode.replaceChild(newForm, form);
-                         newForm.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
-                    } else {
-                        if(commentListEl) commentListEl.innerHTML = '';
-                        if(noCommentsEl) {
-                            noCommentsEl.textContent = firebaseConfig ? "Menunggu koneksi..." : "Fitur komentar dinonaktifkan.";
-                            noCommentsEl.classList.remove('hidden');
+                        if (db && auth.currentUser) { // Check if Firebase is ready
+                             loadCommentsForSubTopic(subTopicId);
+                             const newForm = form.cloneNode(true); 
+                             form.parentNode.replaceChild(newForm, form);
+                             newForm.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
+                             newForm.classList.remove('hidden'); // Explicitly show
+                             if(noCommentsEl) noCommentsEl.style.display = 'block'; // Show "Memuat komentar..."
+                        } else {
+                            if(commentListEl) commentListEl.innerHTML = '';
+                            if(noCommentsEl) {
+                                noCommentsEl.textContent = firebaseConfig ? "Menunggu koneksi ke layanan komentar..." : "Fitur komentar dinonaktifkan.";
+                                noCommentsEl.style.display = 'block';
+                            }
+                            form.classList.add('hidden'); 
                         }
-                        form.classList.add('hidden'); 
-                    }
-                });
+                    });
+                }, 0); // setTimeout to allow DOM to update
 
             } else {
                 console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
@@ -522,7 +525,7 @@
         async function submitCommentForSubTopic(event, subTopicId) {
             event.preventDefault();
             if (!subTopicId || !db || !auth.currentUser) {
-                alert("Tidak bisa mengirim komentar saat ini. Coba lagi nanti.");
+                alert("Tidak bisa mengirim komentar saat ini. Pastikan Anda terhubung dan coba lagi.");
                 return;
             }
             const form = event.target;
@@ -566,7 +569,7 @@
             }
             commentListEl.innerHTML = '';
             noCommentsEl.textContent = "Memuat komentar...";
-            noCommentsEl.classList.remove('hidden');
+            noCommentsEl.style.display = 'block'; // Show "Memuat komentar..."
 
             const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
             const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
@@ -575,9 +578,9 @@
                 commentListEl.innerHTML = ''; 
                 if (querySnapshot.empty) {
                     noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
-                    noCommentsEl.classList.remove('hidden');
+                    noCommentsEl.style.display = 'block'; 
                 } else {
-                    noCommentsEl.classList.add('hidden');
+                    noCommentsEl.style.display = 'none'; // Hide if there are comments
                     querySnapshot.forEach((doc) => {
                         displayCommentInList(doc.data(), commentListEl);
                     });
@@ -586,7 +589,7 @@
                 console.error(`Error loading comments for ${subTopicId}:`, error);
                 commentListEl.innerHTML = '';
                 noCommentsEl.textContent = "Gagal memuat komentar.";
-                noCommentsEl.classList.remove('hidden');
+                noCommentsEl.style.display = 'block';
             });
         }
 
@@ -615,12 +618,11 @@
             populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
             
+            // Logic to handle UI if Firebase isn't ready is now primarily within loadContent
+            // This ensures it's applied when the comment sections are actually in the DOM.
             if (!firebaseReady) {
-                document.querySelectorAll('.comment-form').forEach(form => form.classList.add('hidden'));
-                document.querySelectorAll('.no-comments').forEach(el => {
-                    el.textContent = "Fitur komentar dinonaktifkan (Firebase gagal dimuat).";
-                    el.classList.remove('hidden');
-                });
+                console.warn("Firebase tidak siap saat DOMContentLoaded. Fitur komentar mungkin tidak berfungsi sampai Firebase siap dan konten dimuat ulang.");
+                // Tidak perlu menyembunyikan form secara global di sini karena loadContent akan menanganinya.
             }
         });
     </script>
