@@ -3,412 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Admirer, Gelar & Tips Spesial!</title>
+    <title>Kumpulan Cerita & Fakta Kampus</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVXM5RdhCRK0B3TUmrQAATGHCVARg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Latar belakang abu-abu muda */
+            color: #1f2937; /* Warna teks default abu-abu gelap */
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: flex-start; /* Align items to the top agar padding terlihat */
             min-height: 100vh;
-            background-color: #f0f4f8;
+            padding: 20px;
             margin: 0;
-            padding: 16px;
         }
         .container {
             background-color: white;
             padding: 24px;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
             width: 100%;
-            max-width: 400px;
+            max-width: 700px; /* Lebar kontainer bisa lebih besar untuk konten */
+            text-align: center;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
+        h1 {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #111827; /* Abu-abu sangat gelap */
+        }
+        h2 { /* Untuk judul konten */
+            font-size: 1.75rem; /* 28px */
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #111827;
+        }
+        .topic-btn {
+            background-color: #3b82f6; /* Biru */
+            color: white;
+            padding: 16px; /* Padding lebih besar untuk tombol topik */
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            margin-top: 16px;
-            width: 100%;
+            text-align: center;
+            width: 100%; /* Tombol memenuhi lebar grid cell */
+            font-size: 1.1rem; /* Ukuran font tombol topik */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow halus */
         }
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: #2563eb;
+        .topic-btn:hover {
+            background-color: #2563eb; /* Biru lebih gelap */
             transform: translateY(-2px);
         }
         .btn-secondary {
-            background-color: #6b7280;
+            background-color: #6b7280; /* Abu-abu */
             color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block; /* Agar bisa diatur margin */
+            margin-bottom: 20px; /* Tambahkan margin bawah untuk tombol kembali */
+            margin-top: 0; /* Reset margin atas jika ada */
         }
         .btn-secondary:hover {
-            background-color: #4b5563;
-            transform: translateY(-2px);
+            background-color: #4b5563; /* Abu-abu lebih gelap */
         }
-        .btn-accent {
-            background-color: #f59e0b;
-            color: white;
+        .content-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 16px; /* Margin atas gambar */
+            margin-bottom: 16px; /* Margin bawah gambar */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        .btn-accent:hover {
-            background-color: #d97706;
-            transform: translateY(-2px);
-        }
-        .btn-success { /* Tombol baru untuk tips */
-            background-color: #16a34a; /* Hijau lebih tua */
-            color: white;
-        }
-        .btn-success:hover {
-            background-color: #15803d;
-            transform: translateY(-2px);
-        }
-        .btn-share {
-            background-color: #10b981;
-            color: white;
-        }
-        .btn-share:hover {
-            background-color: #059669;
-            transform: translateY(-2px);
-        }
-        .gender-btn {
-            border: 2px solid #d1d5db;
-            color: #374151;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-        .gender-btn.selected {
-            background-color: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
-        }
-        .gender-btn:hover:not(.selected) {
-            background-color: #f3f4f6;
-        }
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #1f2937;
-        }
-        h2 { /* Untuk sub-judul di layar tips */
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1f2937;
-        }
-        p {
-            color: #4b5563;
-            margin-bottom: 24px;
-        }
-        .tips-list {
+        .content-text {
             text-align: left;
-            margin: 20px auto;
-            padding-left: 20px; /* Indentasi untuk list */
-            list-style-type: '👉 '; /* Emoji sebagai bullet point */
-            color: #374151; /* Warna teks untuk tips */
+            line-height: 1.7;
+            color: #374151; /* Abu-abu tua untuk teks konten */
+            font-size: 1rem; /* 16px */
         }
-        .tips-list li {
-            margin-bottom: 10px;
-            line-height: 1.6;
+        .content-text p, .content-text ul {
+            margin-bottom: 1rem; /* Jarak antar paragraf/list */
+        }
+        .content-text ul {
+            list-style-position: inside; /* Agar bullet point rapi */
+            padding-left: 0; /* Reset padding kiri default */
+        }
+        .content-text li {
+            margin-bottom: 0.5rem; /* Jarak antar item list */
         }
         .hidden {
             display: none;
         }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #3b82f6;
-            animation: spin 1s ease infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .result-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ef4444;
-            margin: 16px 0;
-            animation: popIn 0.5s ease-out;
-        }
-        .title-text {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #8b5cf6;
-            margin: 16px 0;
-            animation: popIn 0.5s ease-out 0.2s;
-        }
-        .stroke-text { /* Untuk teks STROKE */
-            font-size: 3rem;
-            font-weight: bold;
-            color: #dc2626; /* Merah menyala */
-            text-transform: uppercase;
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
-        }
-        #copyNotification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #1f2937;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out, bottom 0.3s ease-in-out;
-        }
-        #copyNotification.show {
-            opacity: 1;
-            bottom: 40px;
+        /* Grid untuk tombol topik */
+        #topicGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Kolom responsif */
+            gap: 16px; /* Jarak antar tombol */
+            margin-bottom: 24px; /* Tambah margin bawah untuk grid topik */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="genderSelectionScreen">
-            <h1>Pilih Gender Kamu</h1>
-            <p>Untuk melanjutkan, pilih gendermu di bawah ini.</p>
-            <button id="maleButton" class="btn gender-btn" onclick="selectGender('male')">Pria 🧔</button>
-            <button id="femaleButton" class="btn gender-btn" onclick="selectGender('female')">Wanita 👩</button>
-            <button id="continueButton" class="btn btn-primary" onclick="showCalculating()" disabled>Lanjut</button>
+        <div id="topicSelectionScreen">
+            <h1>Pilih Topik yang Menarik</h1>
+            <div id="topicGrid">
+                </div>
         </div>
 
-        <div id="calculatingScreen" class="hidden">
-            <h1>Menganalisis...</h1>
-            <p>Harap tunggu, sistem kami sedang menghitung berdasarkan pilihanmu.</p>
-            <div class="spinner"></div>
+        <div id="contentDisplayScreen" class="hidden">
+            <button id="backToTopicsButton" class="btn-secondary">← Kembali ke Pilihan Topik</button>
+            <h2 id="contentTitle"></h2>
+            <div id="contentBody" class="content-text">
+                </div>
         </div>
-
-        <div id="prankScreen" class="hidden">
-            <div class="icon">🎉</div>
-            <h1>Selamat!</h1>
-            <p>Setelah melalui perhitungan algoritma super canggih dan analisis mendalam...</p>
-            <p>Pengagum rahasiamu adalah...</p>
-            <div class="result-name">VEDA!</div>
-            <p>💖</p>
-            <button class="btn btn-accent" onclick="showSuperKingScreen()">Lanjut ke Kejutan Berikutnya!</button>
-        </div>
-
-        <div id="superKingScreen" class="hidden">
-            <div class="icon">👑</div>
-            <h1>PENGUMUMAN SPESIAL!</h1>
-            <p>Atas keberhasilanmu mengungkap pengagum rahasia...</p>
-            <p>Kamu dianugerahi gelar kehormatan:</p>
-            <div class="title-text">SUPER KING</div>
-            <p>oleh King Veda!</p>
-            <button class="btn btn-success" onclick="showKingVedaTipsScreen()">Dapatkan Tips dari King Veda!</button>
-            </div>
-
-        <div id="kingVedaTipsScreen" class="hidden">
-            <div class="icon">💡</div>
-            <h1>Tips Eksklusif dari King Veda</h1>
-            <p>Sebagai seorang SUPER KING, berikut wejangan spesial untukmu:</p>
-            <ul class="tips-list">
-                <li>JIKA sange pergi push up</li>
-                <li>Punya HP baru? Push rankk</li>
-                <li>Dah maghrib? Sholat lanjut pushrank</li>
-                <li>Push rank push rank</li>
-                <li>Wlelelelelele</li>
-            </ul>
-            <div class="stroke-text">STROKE!</div>
-            <p class="mt-6">Gunakan gelar dan tips ini dengan bijak!</p>
-            <button id="shareTipsButton" class="btn btn-share" onclick="shareTipsAsImage()">Bagikan Tips Ini!</button>
-            <button class="btn btn-secondary" onclick="tryAgain()">Coba Lagi dari Awal?</button>
-        </div>
-
-
-        <div id="copyNotification" class="hidden">Notifikasi</div>
     </div>
 
-    <input type="text" id="shareLinkInput" style="position: absolute; left: -9999px; top: -9999px;">
-
     <script>
-        const genderSelectionScreen = document.getElementById('genderSelectionScreen');
-        const calculatingScreen = document.getElementById('calculatingScreen');
-        const prankScreen = document.getElementById('prankScreen');
-        const superKingScreen = document.getElementById('superKingScreen');
-        const kingVedaTipsScreen = document.getElementById('kingVedaTipsScreen'); // Layar baru
-        const continueButton = document.getElementById('continueButton');
-        const maleButton = document.getElementById('maleButton');
-        const femaleButton = document.getElementById('femaleButton');
-        const copyNotification = document.getElementById('copyNotification');
-        const shareLinkInput = document.getElementById('shareLinkInput');
-        // Tombol share gelar sekarang diubah menjadi tombol share tips
-        const shareTipsButton = document.getElementById('shareTipsButton'); 
+        // Ambil elemen-elemen DOM
+        const topicSelectionScreen = document.getElementById('topicSelectionScreen');
+        const contentDisplayScreen = document.getElementById('contentDisplayScreen');
+        const topicGrid = document.getElementById('topicGrid');
+        const contentTitle = document.getElementById('contentTitle');
+        const contentBody = document.getElementById('contentBody');
+        const backToTopicsButton = document.getElementById('backToTopicsButton');
 
-        let selectedGender = null;
+        // Definisikan daftar topik
+        const topics = [
+            { key: "romansa", name: "Romansa Kampus" },
+            { key: "anomali", name: "Anomali Mahasiswa" },
+            { key: "gamer", name: "Dunia Gamer Kampus" },
+            { key: "tugas", name: "Info Tugas Kuliah" },
+            { key: "fyi", name: "FYI Terkini" }
+        ];
 
-        function selectGender(gender) {
-            selectedGender = gender;
-            if (gender === 'male') {
-                maleButton.classList.add('selected');
-                femaleButton.classList.remove('selected');
-            } else {
-                femaleButton.classList.add('selected');
-                maleButton.classList.remove('selected');
+        // Data konten untuk setiap topik
+        const contentData = {
+            "romansa": {
+                title: "Kisah Romansa di Kebun Percobaan",
+                bodyHTML: `
+                    <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
+                    <p>Ini adalah jejak digital atau foto teman yang bertemu dengan teman ceweknya ketika kegiatan praktikum jagung di kebun percobaan Fakultas Pertanian. Sebuah momen tak terduga yang mungkin menjadi awal dari sebuah cerita.</p>
+                `
+            },
+            "anomali": {
+                title: "Anomali Mahasiswa: Fakta Mengejutkan!",
+                bodyHTML: "<p>Fenomena-fenomena unik dan tak terduga yang sering terjadi di dunia perkuliahan mahasiswa Fakultas Pertanian. Mulai dari kejadian lucu saat praktikum hingga mitos-mitos kampus yang melegenda. (Detail konten akan segera hadir!)</p>"
+            },
+            "gamer": {
+                title: "Seputar Dunia Gamer Kampus Pertanian",
+                bodyHTML: "<p>Siapa bilang anak pertanian cuma tahu cangkul dan pupuk? Dari mabar Mobile Legends di sela-sela kuliah, turnamen Valorant antar jurusan, hingga build PC gaming impian. Inilah sisi gamer para mahasiswa. (Detail konten dan cerita seru lainnya akan segera hadir!)</p>"
+            },
+            "tugas": {
+                title: "Info Tugas Kuliah & Deadline Pertanian",
+                bodyHTML: `
+                    <p>Jangan sampai terlewat! Info seputar tugas dan deadline mata kuliah Fakultas Pertanian yang sering bikin auto-begadang:</p>
+                    <ul>
+                        <li>Laporan Praktikum Urban Farming</li>
+                        <li>Makalah Produksi Tanaman Hortikultura</li>
+                        <li>Presentasi Zat Pengatur Tumbuh</li>
+                        <li>Proposal Penelitian Tanaman Industri</li>
+                        <li>Ujian Akhir Semester Statistika</li>
+                    </ul>
+                    <p>(Tips, trik, dan contoh format akan segera ditambahkan!)</p>
+                `
+            },
+            "fyi": {
+                title: "FYI Terkini Seputar Kampus Pertanian",
+                bodyHTML: "<p>Informasi penting, pengumuman, event menarik, atau sekadar gosip hangat seputar kehidupan di Fakultas Pertanian yang perlu kamu tahu. Jangan sampai ketinggalan update! (Pantau terus halaman ini!)</p>"
             }
-            continueButton.disabled = false;
+        };
+
+        // Fungsi untuk membuat tombol topik secara dinamis
+        function populateTopicButtons() {
+            topicGrid.innerHTML = ''; // Kosongkan grid sebelum mengisi ulang
+            topics.forEach(topic => {
+                const button = document.createElement('button');
+                button.classList.add('topic-btn');
+                button.setAttribute('data-topic', topic.key);
+                button.textContent = topic.name;
+                topicGrid.appendChild(button);
+            });
         }
 
-        function showCalculating() {
-            if (!selectedGender) {
-                console.error('Pilihan gender tidak ada saat showCalculating dipanggil.');
-                showGeneralNotification("Pilih gender dulu ya!", true);
-                return;
+        // Event listener untuk klik pada grid tombol topik
+        topicGrid.addEventListener('click', function(event) {
+            // Pastikan yang diklik adalah tombol topik
+            if (event.target.classList.contains('topic-btn')) {
+                const topicKey = event.target.getAttribute('data-topic');
+                loadContent(topicKey);
             }
-            genderSelectionScreen.classList.add('hidden');
-            calculatingScreen.classList.remove('hidden');
+        });
 
-            setTimeout(() => {
-                calculatingScreen.classList.add('hidden');
-                prankScreen.classList.remove('hidden');
-            }, 2000);
-        }
+        // Event listener untuk tombol kembali
+        backToTopicsButton.addEventListener('click', function() {
+            contentDisplayScreen.classList.add('hidden');
+            topicSelectionScreen.classList.remove('hidden');
+            contentTitle.innerHTML = ""; // Kosongkan judul saat kembali
+            contentBody.innerHTML = ""; // Kosongkan konten saat kembali
+        });
 
-        function showSuperKingScreen() {
-            prankScreen.classList.add('hidden');
-            superKingScreen.classList.remove('hidden');
-        }
-
-        function showKingVedaTipsScreen() {
-            superKingScreen.classList.add('hidden');
-            kingVedaTipsScreen.classList.remove('hidden');
-        }
-
-        function tryAgain() {
-            prankScreen.classList.add('hidden');
-            superKingScreen.classList.add('hidden');
-            kingVedaTipsScreen.classList.add('hidden'); // Sembunyikan juga layar tips
-            genderSelectionScreen.classList.remove('hidden');
-            
-            selectedGender = null;
-            maleButton.classList.remove('selected');
-            femaleButton.classList.remove('selected');
-            continueButton.disabled = true;
-            
-            // Reset tombol share tips
-            if(shareTipsButton) { // Cek jika tombol ada
-                shareTipsButton.disabled = false; 
-                shareTipsButton.textContent = "Bagikan Tips Ini!";
-            }
-        }
-
-        function showGeneralNotification(message, isError = false) {
-            copyNotification.textContent = message;
-            copyNotification.style.backgroundColor = isError ? '#ef4444' : '#1f2937';
-            copyNotification.classList.add('show');
-            setTimeout(() => {
-                copyNotification.classList.remove('show');
-                setTimeout(() => { copyNotification.style.backgroundColor = '#1f2937'; }, 500);
-            }, 3000);
-        }
-        
-        async function shareTipsAsImage() { // Menggantikan shareTitleAsImage
-            if (!shareTipsButton) return; // Jika tombol tidak ada di layar ini
-
-            shareTipsButton.disabled = true;
-            shareTipsButton.textContent = "Memproses Screenshot...";
-
-            try {
-                const elementToCapture = document.getElementById('kingVedaTipsScreen'); // Target screenshot baru
-                if (!elementToCapture) {
-                    showGeneralNotification("Elemen untuk screenshot tidak ditemukan.", true);
-                    resetShareButton(shareTipsButton, "Bagikan Tips Ini!");
-                    return;
-                }
-
-                const buttonsToHide = elementToCapture.querySelectorAll('button');
-                buttonsToHide.forEach(btn => btn.style.visibility = 'hidden');
-
-                const canvas = await html2canvas(elementToCapture, {
-                    scale: window.devicePixelRatio * 1.5,
-                    useCORS: true,
-                    logging: false,
-                    ignoreElements: (element) => element.id === 'copyNotification'
-                });
-
-                buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
+        // Fungsi untuk memuat dan menampilkan konten topik
+        function loadContent(topicKey) {
+            const topicContent = contentData[topicKey]; 
+            if (topicContent) {
+                contentTitle.textContent = topicContent.title;
+                contentBody.innerHTML = topicContent.bodyHTML; // Menggunakan innerHTML karena konten bisa berisi tag HTML
                 
-                const dataUrl = canvas.toDataURL('image/png');
-                const blob = await fetch(dataUrl).then(res => res.blob());
-                const imageFile = new File([blob], "tips-king-veda.png", { type: "image/png" }); // Nama file baru
-
-                if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
-                    await navigator.share({
-                        files: [imageFile],
-                        title: 'Tips dari King Veda!', // Judul share baru
-                        text: 'Dapet tips GG dari King Veda nih! 😂 Cekidot!', // Teks share baru
-                    });
-                    showGeneralNotification('Berhasil dibagikan!');
-                } else {
-                    fallbackShare(dataUrl, "tips-king-veda.png", `Dapet tips GG dari King Veda nih! 😂 Cekidot! Penasaran? Coba juga prank ini: ${window.location.href}`);
-                }
-            } catch (error) {
-                console.error('Error saat mengambil atau membagikan screenshot tips:', error);
-                showGeneralNotification('Gagal membuat atau membagikan screenshot.', true);
-                const elementToCapture = document.getElementById('kingVedaTipsScreen');
-                if (elementToCapture) {
-                    const buttonsToHide = elementToCapture.querySelectorAll('button');
-                    buttonsToHide.forEach(btn => btn.style.visibility = 'visible');
-                }
-            } finally {
-                 resetShareButton(shareTipsButton, "Bagikan Tips Ini!");
+                // Pindah layar
+                topicSelectionScreen.classList.add('hidden');
+                contentDisplayScreen.classList.remove('hidden');
+                window.scrollTo(0, 0); // Scroll ke atas halaman agar konten baru terlihat
+            } else {
+                // Jika konten tidak ditemukan, tampilkan pesan error
+                console.error("Konten untuk topik tidak ditemukan:", topicKey);
+                contentTitle.textContent = "Konten Tidak Ditemukan";
+                contentBody.innerHTML = "<p>Maaf, konten untuk topik ini belum tersedia atau tidak ditemukan. Silakan coba topik lain.</p>";
+                
+                topicSelectionScreen.classList.add('hidden');
+                contentDisplayScreen.classList.remove('hidden');
+                window.scrollTo(0, 0);
             }
         }
 
-        function fallbackShare(dataUrl, fileName, waTextMessage) {
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            const waMessage = encodeURIComponent(waTextMessage);
-            window.open(`https://api.whatsapp.com/send?text=${waMessage}`, '_blank');
-
-            showGeneralNotification("Screenshot diunduh. Buka WhatsApp & lampirkan gambarnya!");
-        }
-
-        function resetShareButton(buttonElement, buttonText) {
-            if (buttonElement) {
-                buttonElement.disabled = false;
-                buttonElement.textContent = buttonText;
-            }
-        }
-
-        // Inisialisasi
-        continueButton.disabled = true;
-
+        // Panggil fungsi untuk mengisi tombol topik saat halaman pertama kali dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTopicButtons();
+        });
     </script>
 </body>
 </html>
