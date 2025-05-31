@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siapa Secret Admirer Kamu?</title>
+    <title>Siapa Secret Admirer Kamu & Kejutan Spesial!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -50,6 +50,14 @@
         }
         .btn-secondary:hover {
             background-color: #4b5563;
+            transform: translateY(-2px);
+        }
+        .btn-accent { /* Tombol baru untuk langkah selanjutnya */
+            background-color: #f59e0b; /* Kuning/Oranye */
+            color: white;
+        }
+        .btn-accent:hover {
+            background-color: #d97706;
             transform: translateY(-2px);
         }
         .btn-share {
@@ -107,6 +115,13 @@
             margin: 16px 0;
             animation: popIn 0.5s ease-out;
         }
+        .title-text { /* Styling untuk gelar SUPER KING */
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #8b5cf6; /* Ungu */
+            margin: 16px 0;
+            animation: popIn 0.5s ease-out 0.2s; /* Sedikit delay */
+        }
         @keyframes popIn {
             0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
@@ -141,7 +156,7 @@
             <p>Untuk melanjutkan, pilih gendermu di bawah ini.</p>
             <button id="maleButton" class="btn gender-btn" onclick="selectGender('male')">Pria 🧔</button>
             <button id="femaleButton" class="btn gender-btn" onclick="selectGender('female')">Wanita 👩</button>
-            <button id="continueButton" class="btn btn-primary" onclick="showResult()" disabled>Lanjut</button>
+            <button id="continueButton" class="btn btn-primary" onclick="showCalculating()" disabled>Lanjut</button>
         </div>
 
         <div id="calculatingScreen" class="hidden">
@@ -157,9 +172,20 @@
             <p>Pengagum rahasiamu adalah...</p>
             <div class="result-name">VEDA!</div>
             <p>💖</p>
-            <button class="btn btn-share" onclick="sharePrank()">Bagikan ke Teman!</button>
-            <button class="btn btn-secondary" onclick="tryAgain()">Coba Lagi?</button>
+            <button class="btn btn-accent" onclick="showSuperKingScreen()">Lanjut ke Kejutan Berikutnya!</button>
         </div>
+
+        <div id="superKingScreen" class="hidden">
+            <div class="icon">👑</div>
+            <h1>PENGUMUMAN SPESIAL!</h1>
+            <p>Atas keberhasilanmu mengungkap pengagum rahasia...</p>
+            <p>Kamu dianugerahi gelar kehormatan:</p>
+            <div class="title-text">SUPER KING</div>
+            <p>oleh King Veda!</p>
+            <button class="btn btn-share" onclick="sharePrank()">Bagikan Gelar Ini!</button>
+            <button class="btn btn-secondary" onclick="tryAgain()">Coba Lagi dari Awal?</button>
+        </div>
+
 
         <div id="copyNotification" class="hidden">Link berhasil disalin!</div>
     </div>
@@ -170,6 +196,7 @@
         const genderSelectionScreen = document.getElementById('genderSelectionScreen');
         const calculatingScreen = document.getElementById('calculatingScreen');
         const prankScreen = document.getElementById('prankScreen');
+        const superKingScreen = document.getElementById('superKingScreen'); // Layar baru
         const continueButton = document.getElementById('continueButton');
         const maleButton = document.getElementById('maleButton');
         const femaleButton = document.getElementById('femaleButton');
@@ -188,13 +215,17 @@
                 maleButton.classList.remove('selected');
             }
             continueButton.disabled = false;
-            continueButton.classList.replace('btn-primary', 'btn-primary'); // Ensure it's primary
+            // Tidak perlu .classList.replace jika hanya memastikan kelas ada
+            // continueButton.classList.replace('btn-primary', 'btn-primary'); 
         }
 
-        function showResult() {
+        function showCalculating() {
             if (!selectedGender) {
                 // Seharusnya tidak terjadi karena tombol lanjut di-disable
-                alert('Pilih gender terlebih dahulu!');
+                // Mengganti alert dengan notifikasi custom jika diinginkan, tapi untuk error internal alert masih ok.
+                // Untuk pengalaman pengguna yang lebih baik, bisa dibuatkan modal custom.
+                // Namun, karena tombol continueButton di-disable, ini seharusnya tidak terpicu.
+                console.error('Pilihan gender tidak ada saat showCalculating dipanggil.');
                 return;
             }
             genderSelectionScreen.classList.add('hidden');
@@ -203,12 +234,18 @@
             // Simulasi kalkulasi
             setTimeout(() => {
                 calculatingScreen.classList.add('hidden');
-                prankScreen.classList.remove('hidden');
+                prankScreen.classList.remove('hidden'); // Tampilkan layar Veda dulu
             }, 2000); // Tunggu 2 detik
+        }
+
+        function showSuperKingScreen() {
+            prankScreen.classList.add('hidden');
+            superKingScreen.classList.remove('hidden');
         }
 
         function tryAgain() {
             prankScreen.classList.add('hidden');
+            superKingScreen.classList.add('hidden'); // Sembunyikan juga layar super king
             genderSelectionScreen.classList.remove('hidden');
             
             // Reset pilihan gender
@@ -251,6 +288,8 @@
 
         // Inisialisasi: disable tombol lanjut sampai gender dipilih
         continueButton.disabled = true;
+        // Ganti nama fungsi yang dipanggil oleh tombol Lanjut dari pemilihan gender
+        // continueButton.onclick = showCalculating; // Ini sudah diatur di HTML
     </script>
 </body>
 </html>
