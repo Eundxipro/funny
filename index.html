@@ -316,6 +316,7 @@
             <div class="site-header">
                 <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Kisah Kampus Kita</h1>
                 <p>Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!</p>
+                <div id="firebase-status-message" style="margin-top: 10px; font-weight: bold;"></div>
             </div>
             <div id="topicGrid"></div>
         </div>
@@ -330,26 +331,60 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        // import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"; // Analytics tidak kita gunakan di sini
+        // import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"; // Analytics dinonaktifkan sementara
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
-          authDomain: "funny-e436a.firebaseapp.com",
-          projectId: "funny-e436a",
-          storageBucket: "funny-e436a.firebasestorage.app", // Menggunakan nilai yang Anda berikan
-          messagingSenderId: "626813764903",
-          appId: "1:626813764903:web:73250f741ddaac3a555502",
-          measurementId: "G-MSSK2DD3SD"
-        };
+        // ==========================================================================================
+        // == PASTE KONFIGURASI FIREBASE ANDA DI BAWAH INI ==
+        // ==========================================================================================
+        // Hapus komentar (//) di depan 'const firebaseConfig = {' dan '};' di bawah,
+        // lalu ganti seluruh isinya dengan objek firebaseConfig yang Anda dapatkan dari Firebase Console.
+        // Contoh:
+        // const firebaseConfig = {
+        //   apiKey: "AIzaSy...",
+        //   authDomain: "nama-proyek-anda.firebaseapp.com",
+        //   projectId: "nama-proyek-anda",
+        //   storageBucket: "nama-proyek-anda.appspot.com",
+        //   messagingSenderId: "...",
+        //   appId: "1:...",
+        //   measurementId: "G-..." // Opsional
+        // };
         
-        // Initialize Firebase
-        // const app = initializeApp(firebaseConfig); // Pindahkan inisialisasi ke dalam fungsi async
-        // const analytics = getAnalytics(app); // Analytics tidak kita gunakan, bisa di-komentari atau dihapus jika tidak perlu
-        const appId = firebaseConfig.appId; // Kita tetap butuh appId untuk path Firestore
+        // SILAKAN PASTE firebaseConfig ANDA DI SINI, MENGGANTIKAN BLOK DI BAWAH INI JIKA PERLU:
+        const firebaseConfig = {
+         apiKey: "AIzaSyA_lcZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
+         authDomain: "funny-e436a.firebaseapp.com",
+         projectId: "funny-e436a",
+         storageBucket: "funny-e436a.firebasestorage.app",
+         messagingSenderId: "626813764903",
+         appId: "1:626813764903:web:73250f741ddaac3a555502",
+         measurementId: "G-MSSK2DD3SD"
+        };
+        // ==========================================================================================
+        // == AKHIR BAGIAN UNTUK PASTE KONFIGURASI FIREBASE ==
+        // ==========================================================================================
+        
+        let app; 
+        const firebaseStatusMsg = document.getElementById('firebase-status-message');
+
+        try {
+            console.log("Attempting to initialize Firebase app with config:", JSON.parse(JSON.stringify(firebaseConfig)));
+            app = initializeApp(firebaseConfig);
+            console.log("Firebase app initialized successfully.");
+            if (firebaseStatusMsg) firebaseStatusMsg.textContent = ""; 
+        } catch (e) {
+            console.error("CRITICAL: Error initializing Firebase app:", e);
+            if (firebaseStatusMsg) {
+                firebaseStatusMsg.textContent = `Kritis: Gagal menginisialisasi Firebase. Fitur komentar tidak akan berfungsi. Error: ${e.message}`;
+                firebaseStatusMsg.style.color = "red";
+            }
+        }
+        
+        // const appId = firebaseConfig.appId; // Ambil appId dari config yang sudah di-paste pengguna
+        // Pastikan firebaseConfig.appId ada sebelum mengambilnya
+        const appId = (firebaseConfig && firebaseConfig.appId) ? firebaseConfig.appId : 'default-app-id-error-config';
+
 
         let db, auth;
         let activeCommentListeners = {}; 
@@ -360,6 +395,7 @@
         const contentTitle = document.getElementById('contentTitle');
         const contentBody = document.getElementById('contentBody');
         const backToTopicsButton = document.getElementById('backToTopicsButton');
+
 
         const topics = [
             { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat", tagline: "Debar cinta & pertemuan tak terlupakan di tengah hiruk pikuk akademis." },
@@ -384,7 +420,7 @@
             `;
         }
         
-        const contentData = {
+        const contentData = { // Konten tetap sama seperti versi sebelumnya
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
                 bodyHTML: `<div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li><li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li></ul></div><div id="romansa-kisah-1"><h3>Kisah #1: Pertemuan di Praktikum Jagung</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>${createCommentSectionHTML("romansa-kisah-1")}</div><div id="romansa-kisah-2"><h3>Kisah #2: Momen Lain di Kebun?</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image"><p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>${createCommentSectionHTML("romansa-kisah-2")}</div>`
@@ -407,57 +443,38 @@
             }
         };
         
-        async function initializeFirebase() {
-            // Pengecekan apakah firebaseConfig sudah diisi dengan benar
-            if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA") { 
-                 // Jika API Key masih placeholder umum, atau jika API Key spesifik Anda tidak cocok dengan projectId yang diharapkan
-                 if (firebaseConfig.apiKey === "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E" && firebaseConfig.projectId !== "funny-e436a") {
-                    console.warn("API Key terdeteksi, namun projectId tidak cocok. Pastikan konfigurasi benar.");
-                 } else {
-                    console.warn("Konfigurasi Firebase belum diatur dengan benar atau menggunakan placeholder. Fitur komentar mungkin tidak berfungsi.");
-                 }
-                 const siteHeaderP = document.querySelector('.site-header p');
-                 if (siteHeaderP && !document.getElementById('firebase-warning')) { 
-                     const warning = document.createElement('p');
-                     warning.id = 'firebase-warning'; 
-                     warning.textContent = "Peringatan: Konfigurasi Firebase belum diatur dengan benar. Fitur komentar tidak akan berfungsi.";
-                     warning.style.color = "red";
-                     warning.style.fontWeight = "bold";
-                     warning.style.marginTop = "10px";
-                     siteHeaderP.parentNode.insertBefore(warning, siteHeaderP.nextSibling);
-                 }
-                 return false; 
+        async function initializeFirebaseServices() {
+            console.log("Attempting to initialize Firebase services using provided app instance...");
+            if (!app) {
+                console.error("Firebase app instance is not available globally. Cannot initialize services.");
+                if (firebaseStatusMsg) {
+                    firebaseStatusMsg.textContent = `Kritis: Gagal mendapatkan instance Firebase App. Fitur komentar tidak akan berfungsi.`;
+                    firebaseStatusMsg.style.color = "red";
+                }
+                return false;
             }
 
             try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
+                auth = getAuth(app); 
+                db = getFirestore(app); 
                 setLogLevel('error'); 
 
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
+                console.log("Firebase Auth and Firestore obtained. Attempting to sign in...");
+                await signInAnonymously(auth); // Fokus pada anonymous sign-in
+                console.log("Signed in anonymously.");
+                
+                console.log("Firebase services initialized and user signed in. User UID:", auth.currentUser ? auth.currentUser.uid : "No user");
+                if (firebaseStatusMsg) {
+                    firebaseStatusMsg.textContent = "Firebase terhubung."; 
+                    firebaseStatusMsg.style.color = "green"; 
                 }
-                console.log("Firebase berhasil diinisialisasi dan pengguna telah sign-in secara anonim.");
-                const warningElement = document.getElementById('firebase-warning');
-                if (warningElement) warningElement.remove();
-                const errorElement = document.getElementById('firebase-error'); // Hapus juga pesan error jika berhasil
-                if (errorElement) errorElement.remove();
                 return true;
             } catch (error) {
-                console.error("Error initializing Firebase:", error);
-                 const siteHeaderP = document.querySelector('.site-header p');
-                 if (siteHeaderP && !document.getElementById('firebase-error')) {
-                     const errorMsg = document.createElement('p');
-                     errorMsg.id = 'firebase-error';
-                     errorMsg.textContent = `Error Firebase: ${error.message}. Fitur komentar tidak akan berfungsi.`;
-                     errorMsg.style.color = "red";
-                     errorMsg.style.fontWeight = "bold";
-                     errorMsg.style.marginTop = "10px";
-                     siteHeaderP.parentNode.insertBefore(errorMsg, siteHeaderP.nextSibling);
-                 }
+                console.error("Error initializing Firebase services (Auth/Firestore) or signing in:", error);
+                if (firebaseStatusMsg) {
+                     firebaseStatusMsg.textContent = `Error Firebase: ${error.message}. Fitur komentar tidak akan berfungsi.`;
+                     firebaseStatusMsg.style.color = "red";
+                }
                 return false;
             }
         }
@@ -518,7 +535,7 @@
                         const subTopicId = form.dataset.subtopicid;
                         const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
 
-                        if (db && auth.currentUser) { 
+                        if (db && auth && auth.currentUser) { 
                              if(noCommentsEl) noCommentsEl.style.display = 'block'; 
                              loadCommentsForSubTopic(subTopicId);
                              const newForm = form.cloneNode(true); 
@@ -529,7 +546,15 @@
                             const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
                             if (commentListEl) commentListEl.innerHTML = '';
                             if (noCommentsEl) {
-                                noCommentsEl.textContent = (!firebaseConfig || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA" || (firebaseConfig.apiKey === "AIzaSyA_1cZ-_2eDPcZ44efVhRRcOkJQamO4S5E" && firebaseConfig.projectId !== "funny-e436a")) ? "Fitur komentar dinonaktifkan (Konfigurasi Firebase belum diatur)." : "Menunggu koneksi ke layanan komentar...";
+                                let warningText = "Menunggu koneksi ke layanan komentar...";
+                                 if (!app) { 
+                                    warningText = "Kritis: Gagal menginisialisasi Firebase App.";
+                                 } else if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_ANDA") {
+                                    warningText = "Fitur komentar dinonaktifkan (Konfigurasi Firebase belum diatur).";
+                                } else if (auth && !auth.currentUser && app) { 
+                                    warningText = "Proses autentikasi anonim gagal atau belum selesai. Coba refresh halaman.";
+                                }
+                                noCommentsEl.textContent = warningText;
                                 noCommentsEl.style.display = 'block';
                             }
                             form.classList.add('hidden'); 
@@ -557,7 +582,7 @@
 
         async function submitCommentForSubTopic(event, subTopicId) {
             event.preventDefault();
-            if (!subTopicId || !db || !auth.currentUser) {
+            if (!subTopicId || !db || !auth || !auth.currentUser) {
                 alert("Tidak bisa mengirim komentar saat ini. Pastikan Anda terhubung dan coba lagi.");
                 return;
             }
@@ -647,13 +672,26 @@
         }
         
         document.addEventListener('DOMContentLoaded', async function() {
-            const firebaseReady = await initializeFirebase();
+            if (!app) { 
+                console.error("Firebase app is not initialized at DOMContentLoaded. Comments will not work.");
+                const firebaseStatusMsg = document.getElementById('firebase-status-message');
+                if (firebaseStatusMsg) {
+                    firebaseStatusMsg.textContent = "Kritis: Inisialisasi Firebase App gagal. Fitur komentar dinonaktifkan.";
+                    firebaseStatusMsg.style.color = "red";
+                }
+                 document.querySelectorAll('.comment-form').forEach(form => form.classList.add('hidden'));
+                 document.querySelectorAll('.no-comments').forEach(el => {
+                    el.textContent = "Fitur komentar dinonaktifkan (Inisialisasi Firebase App gagal).";
+                    el.style.display = 'block';
+                 });
+            } else {
+                const firebaseReady = await initializeFirebaseServices(); 
+                if (!firebaseReady) {
+                    console.warn("Firebase services (Auth/Firestore) tidak siap saat DOMContentLoaded. Fitur komentar mungkin tidak akan berfungsi dengan benar.");
+                }
+            }
             populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
-            
-            if (!firebaseReady) {
-                console.warn("Firebase tidak siap saat DOMContentLoaded. Fitur komentar mungkin tidak akan berfungsi dengan benar sampai Firebase terhubung dan konten dimuat ulang.");
-            }
         });
     </script>
 </body>
