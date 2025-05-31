@@ -18,7 +18,7 @@
             min-height: 100vh;
             padding: 20px;
             margin: 0;
-            scroll-behavior: smooth; /* Untuk scrolling halus saat klik shortcut */
+            scroll-behavior: smooth;
         }
         .container {
             background-color: #ffffff;
@@ -47,20 +47,27 @@
         h2 { /* Judul konten utama */
             font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 12px; /* Disesuaikan agar dekat dengan shortcut */
+            margin-bottom: 12px;
             color: #3b82f6;
         }
         h3 { /* Sub-judul untuk setiap cerita/anomali */
             font-size: 1.5rem;
             font-weight: 600;
             color: #1f2937;
-            margin-top: 40px; /* Margin atas lebih besar untuk pemisah antar sub-bagian */
+            margin-top: 40px;
             margin-bottom: 12px;
             text-align: left;
             border-bottom: 2px solid #e5e7eb;
             padding-bottom: 8px;
         }
-        /* Styling untuk kartu topik */
+        h4 { /* Sub-judul lebih kecil, misal untuk "Komentar" */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 20px; /* Disesuaikan agar tidak terlalu jauh dari konten sub-topik */
+            margin-bottom: 15px;
+            text-align: left;
+        }
         .topic-card {
             background-color: #f9fafb;
             border: 1px solid #e5e7eb;
@@ -141,11 +148,11 @@
         .content-text p, .content-text ul {
             margin-bottom: 1.25rem;
         }
-        .content-text ul:not(.sub-topic-shortcut-list) { /* Hanya untuk list utama, bukan shortcut */
+        .content-text ul:not(.sub-topic-shortcut-list) {
             list-style-type: none;
             padding-left: 0;
         }
-        .content-text li:not(.shortcut-item) { /* Hanya untuk list utama, bukan shortcut */
+        .content-text li:not(.shortcut-item) {
             margin-bottom: 0.75rem;
             padding-left: 1.75em;
             position: relative;
@@ -159,10 +166,8 @@
             color: #3b82f6;
             font-size: 1em;
         }
-
-        /* Styling untuk shortcut di dalam konten */
         .sub-topic-shortcuts {
-            margin-top: 0px; /* Dekatkan dengan judul H2 */
+            margin-top: 0px;
             margin-bottom: 30px;
             padding: 15px;
             background-color: #f9fafb;
@@ -170,10 +175,11 @@
             border: 1px solid #e5e7eb;
             text-align: left;
         }
-        .sub-topic-shortcuts h4 { /* Judul "Pintasan Konten" */
+        .sub-topic-shortcuts h4 {
             font-size: 1.1rem;
             font-weight: 600;
             color: #3b82f6;
+            margin-top:0;
             margin-bottom: 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid #dbeafe;
@@ -184,9 +190,9 @@
         }
         .sub-topic-shortcut-list .shortcut-item {
             margin-bottom: 8px;
-            padding-left: 0; /* Reset padding-left dari li umum */
+            padding-left: 0;
         }
-        .sub-topic-shortcut-list .shortcut-item::before { /* Hapus ::before dari li umum */
+        .sub-topic-shortcut-list .shortcut-item::before {
             display: none;
         }
         .sub-topic-shortcut-list .shortcut-item a {
@@ -210,8 +216,80 @@
         .sub-topic-shortcut-list .shortcut-item .shortcut-subtitle {
             font-size: 0.8rem;
             color: #6b7280;
-            display: block; /* Agar di baris baru jika terlalu panjang */
+            display: block;
             margin-top: 2px;
+        }
+        /* Comment Section Styling per Sub-Topic */
+        .sub-topic-comment-section {
+            margin-top: 25px; /* Jarak dari konten sub-topik di atasnya */
+            padding-top: 15px;
+            border-top: 1px solid #e0e7ff; /* Border pemisah lebih lembut */
+            text-align: left;
+        }
+        .comment-list {
+            max-height: 300px; /* Disesuaikan agar tidak terlalu panjang per sub-topik */
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding-right: 10px;
+        }
+        .comment-item {
+            background-color: #f9fafb;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .comment-author {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+        }
+        .comment-text {
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .comment-timestamp {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 5px;
+            text-align: right;
+        }
+        .comment-form textarea { /* Menggunakan class agar bisa multiple */
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            min-height: 60px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .comment-form button { /* Menggunakan class */
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+            font-size: 0.9rem;
+        }
+        .comment-form button:hover {
+            background-color: #2563eb;
+        }
+        .comment-form button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .no-comments {
+            color: #6b7280;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
         }
 
         .hidden {
@@ -239,19 +317,27 @@
                 <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Kisah Kampus Kita</h1>
                 <p>Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!</p>
             </div>
-            <div id="topicGrid">
-                </div>
+            <div id="topicGrid"></div>
         </div>
 
         <div id="contentDisplayScreen" class="hidden screen">
             <button id="backToTopicsButton" class="btn-secondary"><i class="fas fa-chevron-left"></i> Kembali ke Topik</button>
             <h2 id="contentTitle"></h2>
-            <div id="contentBody" class="content-text">
-                </div>
+            <div id="contentBody" class="content-text"></div>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let db, auth;
+        let activeCommentListeners = {}; // Untuk menyimpan multiple unsubscribe functions
+
         const topicSelectionScreen = document.getElementById('topicSelectionScreen');
         const contentDisplayScreen = document.getElementById('contentDisplayScreen');
         const topicGrid = document.getElementById('topicGrid');
@@ -267,93 +353,79 @@
             { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
         ];
 
+        // Fungsi untuk membuat struktur HTML bagian komentar
+        function createCommentSectionHTML(subTopicId) {
+            return `
+                <div class="sub-topic-comment-section" id="comment-section-${subTopicId}">
+                    <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
+                    <div id="comment-list-${subTopicId}" class="comment-list">
+                        <p class="no-comments" id="no-comments-${subTopicId}">Memuat komentar...</p>
+                    </div>
+                    <form class="comment-form" data-subtopicid="${subTopicId}">
+                        <textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea>
+                        <button type="submit">Kirim Komentar</button>
+                    </form>
+                </div>
+            `;
+        }
+        
         const contentData = {
             "romansa": {
                 title: "Kisah Romansa di Kebun Percobaan",
                 bodyHTML: `
-                    <div class="sub-topic-shortcuts">
-                        <h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4>
-                        <ul class="sub-topic-shortcut-list">
-                            <li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li>
-                            <li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li>
-                        </ul>
-                    </div>
-
-                    <div id="romansa-kisah-1">
-                        <h3>Kisah #1: Pertemuan di Praktikum Jagung</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image">
-                        <p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
-                    </div>
-                    
-                    <div id="romansa-kisah-2">
-                        <h3>Kisah #2: Momen Lain di Kebun?</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image">
-                        <p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>
-                    </div>
+                    <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li><li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li></ul></div>
+                    <div id="romansa-kisah-1"><h3>Kisah #1: Pertemuan di Praktikum Jagung</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>${createCommentSectionHTML("romansa-kisah-1")}</div>
+                    <div id="romansa-kisah-2"><h3>Kisah #2: Momen Lain di Kebun?</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image"><p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>${createCommentSectionHTML("romansa-kisah-2")}</div>
                 `
             },
             "anomali": {
                 title: "Anomali Mahasiswa: Fakta Unik & Mengejutkan!",
                 bodyHTML: `
-                    <div class="sub-topic-shortcuts">
-                        <h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Anomali:</h4>
-                        <ul class="sub-topic-shortcut-list">
-                            <li class="shortcut-item"><a href="#anomali-1"><strong>Anomali #1:</strong> <span class="shortcut-subtitle">Spesies Baru? Mahasiswa SmT 6 Beraksi!</span></a></li>
-                            <li class="shortcut-item"><a href="#anomali-2"><strong>Anomali #2:</strong> <span class="shortcut-subtitle">Sang Penguasa Jagung, KING VEDA!</span></a></li>
-                            <li class="shortcut-item"><a href="#anomali-3"><strong>Anomali #3:</strong> <span class="shortcut-subtitle">Self-Reward Level Dewa ke Puncak Batur!</span></a></li>
-                            <li class="shortcut-item"><a href="#anomali-4"><strong>Anomali #4:</strong> <span class="shortcut-subtitle">KING VEDA & Tragedi Merah Membara!</span></a></li>
-                        </ul>
-                    </div>
-
+                    <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Anomali:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#anomali-1"><strong>Anomali #1:</strong> <span class="shortcut-subtitle">Spesies Baru? Mahasiswa SmT 6 Beraksi!</span></a></li><li class="shortcut-item"><a href="#anomali-2"><strong>Anomali #2:</strong> <span class="shortcut-subtitle">Sang Penguasa Jagung, KING VEDA!</span></a></li><li class="shortcut-item"><a href="#anomali-3"><strong>Anomali #3:</strong> <span class="shortcut-subtitle">Self-Reward Level Dewa ke Puncak Batur!</span></a></li><li class="shortcut-item"><a href="#anomali-4"><strong>Anomali #4:</strong> <span class="shortcut-subtitle">KING VEDA & Tragedi Merah Membara!</span></a></li></ul></div>
                     <p>Dunia kampus itu penuh warna, dan mahasiswa Fakultas Pertanian punya segudang cerita unik! Pernah dengar dosen yang tiba-tiba pantun di tengah kuliah serius? Atau mitos pohon keramat di belakang lab yang katanya bisa bikin cepat lulus? Kami akan mengupas tuntas fenomena-fenomena 'ajaib' yang mungkin hanya kamu temui di sini. Siap-siap terkejut, tertawa, atau malah mengangguk setuju!</p>
-                    
-                    <div id="anomali-1">
-                        <h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image">
-                        <p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p>
-                        <p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>
-                    </div>
-
-                    <div id="anomali-2">
-                        <h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image">
-                        <p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>
-                    </div>
-                    
-                    <div id="anomali-3">
-                        <h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image">
-                        <p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>
-                    </div>
-
-                    <div id="anomali-4">
-                        <h3>Anomali #4: KING VEDA & Tragedi Merah Membara di Pasar Saham!</h3>
-                        <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.47.56.jpeg" alt="KING VEDA terkapar karena trading" class="content-image">
-                        <p>Oh, nasibmu, KING VEDA! Sang penguasa jagung yang gagah perkasa pun takluk di hadapan grafik candlestick yang tak kenal ampun. Tertangkap kamera, momen langka ketika Yang Mulia terkapar tak berdaya di lantai keramat ruang kampus. Usut punya usut, beliau baru saja mengalami 'cut loss' berjamaah setelah mencoba peruntungan di dunia trading yang fana. Portfolio merah membara, harapan cuan pun sirna. Mungkin beliau terlalu fokus pada 'support dan resistance' harga gabah, hingga lupa 'stop loss' di pasar saham. Mari kita doakan semoga KING VEDA segera bangkit dan kembali ke takhta jagungnya, atau mungkin beralih ke investasi lele dumbo yang lebih stabil. Ingat, Veda, jangan all-in!</p>
-                    </div>
-                    
-                    <p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p>
-                    <ul>
-                        <li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li>
-                        <li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li>
-                        <li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li>
-                    </ul>
-                    <p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>
+                    <div id="anomali-1"><h3>Anomali #1: Spesies Baru? Mahasiswa Semester 6 Beraksi!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.45.30.jpeg" alt="Mahasiswa bergelantungan di pohon saat mendaki" class="content-image"><p>Saat ekspedisi pendakian di hutan belantara (atau mungkin cuma kebun belakang kampus?), sebuah penampakan langka berhasil diabadikan! Sesosok mahasiswa semester 6 terlihat sedang menguji teori evolusi dengan beradaptasi menjadi primata modern. Apakah ini bagian dari praktikum lapangan mata kuliah 'Survival di Alam Liar 101'? Atau jangan-jangan, dia sedang mencari sinyal Wi-Fi yang lebih kuat di ketinggian?</p><p>Satu hal yang pasti, ekspresi wajahnya menunjukkan perpaduan antara kebingungan mencari pijakan dan kebanggaan telah menaklukkan pohon tersebut. Mungkin dia sedang cosplay jadi Tarzan versi hemat budget, atau sekadar ingin merasakan sensasi 'kembali ke alam' setelah pusing tujuh keliling mengerjakan skripsi. Apapun alasannya, aksi nekat ini sukses mengundang tawa dan pertanyaan: "Bro, ngapain di situ?!" 😂</p>${createCommentSectionHTML("anomali-1")}</div>
+                    <div id="anomali-2"><h3>Anomali #2: Sang Penguasa Jagung, KING VEDA, Turun Gunung!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.07.36.jpeg" alt="KING VEDA mengukur jagung" class="content-image"><p>Saksikanlah, momen epik ketika sang legenda kampus, yang oleh para pengikut setianya dijuluki 'KING VEDA', tengah melakukan ritual sakral: mengukur ketinggian tanaman jagung. Dengan tatapan setajam elang dan meteran di tangan (mungkin meteran pinjaman dari tukang jahit langganan), beliau tampak begitu khusyuk seolah sedang menentukan nasib peradaban jagung di muka bumi. Apakah jagung ini akan tumbuh setinggi ekspektasi dosen? Ataukah akan menjadi jagung biasa yang hanya bisa pasrah pada takdir? Hanya KING VEDA dan meterannya yang tahu jawabannya. Yang jelas, ciri khasnya yang 'merakyat' namun penuh wibawa ini sukses membuat praktikum jagung terasa seperti adegan film kolosal. Salut untuk KING VEDA!</p>${createCommentSectionHTML("anomali-2")}</div>
+                    <div id="anomali-3"><h3>Anomali #3: Misi Nekat ke Puncak Batur: Self-Reward Level Dewa!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.02.09.jpeg" alt="Mahasiswa self-reward di Puncak Batur" class="content-image"><p>Setelah berjuang mati-matian melewati badai revisi dan tatapan maut dosen penguji saat seminar usulan proposal (UP), seorang mahasiswa semester akhir memutuskan bahwa self-reward biasa seperti makan enak atau nonton drakor itu terlalu mainstream! Maka, dengan semangat '45 dan sisa-sisa tenaga pasca-UP, ia nekat melakukan ekspedisi solo ke Puncak Batur. Bukan untuk mencari wangsit atau bertapa, tapi demi satu tujuan mulia: mengambil swafoto epik sebagai bukti penaklukan! Lihatlah senyum kemenangannya yang mengalahkan terbitnya matahari. Dinginnya malam dan gelapnya perjalanan seolah tak ada artinya dibandingkan kepuasan batin telah 'sah' menjadi calon sarjana. Ini bukan sekadar foto, ini adalah deklarasi: "UP kelar, Batur pun terkapar!"</p>${createCommentSectionHTML("anomali-3")}</div>
+                    <div id="anomali-4"><h3>Anomali #4: KING VEDA & Tragedi Merah Membara di Pasar Saham!</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2021.47.56.jpeg" alt="KING VEDA terkapar karena trading" class="content-image"><p>Oh, nasibmu, KING VEDA! Sang penguasa jagung yang gagah perkasa pun takluk di hadapan grafik candlestick yang tak kenal ampun. Tertangkap kamera, momen langka ketika Yang Mulia terkapar tak berdaya di lantai keramat ruang kampus. Usut punya usut, beliau baru saja mengalami 'cut loss' berjamaah setelah mencoba peruntungan di dunia trading yang fana. Portfolio merah membara, harapan cuan pun sirna. Mungkin beliau terlalu fokus pada 'support dan resistance' harga gabah, hingga lupa 'stop loss' di pasar saham. Mari kita doakan semoga KING VEDA segera bangkit dan kembali ke takhta jagungnya, atau mungkin beralih ke investasi lele dumbo yang lebih stabil. Ingat, Veda, jangan all-in!</p>${createCommentSectionHTML("anomali-4")}</div>
+                    <p><strong>Contoh Anomali Lainnya (Segera Hadir):</strong></p><ul><li>Misteri Sendal Jepit yang Selalu Hilang Sebelah di Masjid Kampus.</li><li>Fenomena 'Kesurupan Deadline' H-1 Pengumpulan Laporan.</li><li>Ritual Aneh Sebelum Ujian Praktikum Agar Dapat Nilai A.</li></ul><p>Punya cerita anomali versi kamu? Bagikan di kolom komentar (fitur segera hadir)!</p>
                 `
             },
-            "gamer": {
+             "gamer": {
                 title: "Arena Gamer Kampus Pertanian: Lebih dari Sekadar Cangkul!",
-                bodyHTML: `<p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p><p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p><p><strong>Update Terbaru (Segera Hadir):</strong></p><ul><li>Jadwal Turnamen E-Sport Antar Angkatan.</li><li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li><li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li></ul>`
+                bodyHTML: `<p>Siapa bilang anak pertanian cuma akrab sama tanah dan tanaman? Di balik layar laptop dan smartphone, jiwa-jiwa kompetitif membara! Dari strategi jitu menaklukkan Land of Dawn di Mobile Legends saat istirahat praktikum, koordinasi tim yang solid di map Valorant saat malam minggu, hingga diskusi hangat merakit PC gaming idaman dengan budget mahasiswa.</p><p>Ini bukan cuma soal main game, tapi tentang komunitas, persahabatan, dan pembuktian bahwa anak pertanian juga bisa jadi 'pro player' di bidangnya masing-masing. Apakah kamu salah satunya?</p><p><strong>Update Terbaru (Segera Hadir):</strong></p><ul><li>Jadwal Turnamen E-Sport Antar Angkatan.</li><li>Review Game-Game Populer di Kalangan Mahasiswa Pertanian.</li><li>Tips & Trik Naik Rank dari Para 'Sesepuh Gamer' Kampus.</li></ul> ${createCommentSectionHTML("gamer-main")}` // Contoh untuk topik tanpa sub-bagian
             },
             "tugas": {
                 title: "Info Tugas Kuliah & Deadline Pertanian: Anti Panik!",
-                bodyHTML: `<p>Mahasiswa dan deadline itu dua sejoli yang tak terpisahkan. Biar nggak kelabakan, yuk simak rangkuman tugas-tugas 'keramat' dan tanggal pentingnya di Fakultas Pertanian:</p><ul><li>Laporan Praktikum Urban Farming: <em>Perhatikan format dan analisis data!</em></li><li>Makalah Produksi Tanaman Hortikultura: <em>Kajian literatur mendalam adalah kunci.</em></li><li>Presentasi Zat Pengatur Tumbuh: <em>Siapkan slide yang menarik dan kuasai materi.</em></li><li>Proposal Penelitian Tanaman Industri: <em>Inovasi dan metodologi yang kuat jadi nilai plus.</em></li><li>Ujian Akhir Semester Statistika: <em>Latihan soal sebanyak-banyaknya!</em></li></ul><p><strong>Pro-Tip:</strong> Jangan tunda pekerjaan, buat jadwal, dan jangan ragu diskusi dengan teman atau asisten dosen. Semangat!</p><p>(Kumpulan contoh laporan, format slide, dan bank soal akan segera kami unggah!)</p>`
+                bodyHTML: `<p>Mahasiswa dan deadline itu dua sejoli yang tak terpisahkan. Biar nggak kelabakan, yuk simak rangkuman tugas-tugas 'keramat' dan tanggal pentingnya di Fakultas Pertanian:</p><ul><li>Laporan Praktikum Urban Farming: <em>Perhatikan format dan analisis data!</em></li><li>Makalah Produksi Tanaman Hortikultura: <em>Kajian literatur mendalam adalah kunci.</em></li><li>Presentasi Zat Pengatur Tumbuh: <em>Siapkan slide yang menarik dan kuasai materi.</em></li><li>Proposal Penelitian Tanaman Industri: <em>Inovasi dan metodologi yang kuat jadi nilai plus.</em></li><li>Ujian Akhir Semester Statistika: <em>Latihan soal sebanyak-banyaknya!</em></li></ul><p><strong>Pro-Tip:</strong> Jangan tunda pekerjaan, buat jadwal, dan jangan ragu diskusi dengan teman atau asisten dosen. Semangat!</p><p>(Kumpulan contoh laporan, format slide, dan bank soal akan segera kami unggah!)</p>${createCommentSectionHTML("tugas-main")}`
             },
             "fyi": {
                 title: "FYI Terkini: Jangan Sampai Ketinggalan Info Penting Kampus Pertanian!",
-                bodyHTML: `<p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p><ul><li>Jadwal Seminar & Workshop Terbaru.</li><li>Informasi Beasiswa yang Sedang Dibuka.</li><li>Lowongan Asisten Dosen atau Asisten Praktikum.</li><li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li><li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li></ul><p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>`
+                bodyHTML: `<p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p><ul><li>Jadwal Seminar & Workshop Terbaru.</li><li>Informasi Beasiswa yang Sedang Dibuka.</li><li>Lowongan Asisten Dosen atau Asisten Praktikum.</li><li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li><li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li></ul><p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>${createCommentSectionHTML("fyi-main")}`
             }
         };
+        
+        async function initializeFirebase() {
+            if (!firebaseConfig) {
+                console.error("Firebase config is not defined. Commenting feature will be disabled.");
+                return false;
+            }
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setLogLevel('debug'); 
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                return true;
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                return false;
+            }
+        }
 
         function populateTopicCards() {
             topicGrid.innerHTML = '';
@@ -379,6 +451,10 @@
         });
 
         backToTopicsButton.addEventListener('click', function() {
+            // Unsubscribe from all active comment listeners
+            Object.values(activeCommentListeners).forEach(unsubscribe => unsubscribe());
+            activeCommentListeners = {};
+
             contentDisplayScreen.classList.add('hidden');
             topicSelectionScreen.classList.remove('hidden');
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
@@ -389,29 +465,163 @@
         function loadContent(topicKey) {
             const topicContent = contentData[topicKey]; 
             const topicMeta = topics.find(t => t.key === topicKey);
+
+            // Clear previous listeners
+            Object.values(activeCommentListeners).forEach(unsubscribe => unsubscribe());
+            activeCommentListeners = {};
+
             if (topicContent && topicMeta) {
                 contentTitle.innerHTML = `<i class="${topicMeta.icon}" style="margin-right: 10px; color: #3b82f6;"></i>${topicContent.title}`;
-                contentBody.innerHTML = topicContent.bodyHTML;
+                contentBody.innerHTML = topicContent.bodyHTML; // Ini akan membuat elemen komentar
                 
                 topicSelectionScreen.classList.add('hidden');
                 contentDisplayScreen.classList.remove('hidden');
                 contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
                 window.scrollTo(0, 0);
+
+                // Setelah HTML konten (termasuk placeholder komentar) dimuat:
+                // Inisialisasi komentar untuk setiap sub-bagian
+                const commentForms = contentBody.querySelectorAll('.comment-form');
+                commentForms.forEach(form => {
+                    const subTopicId = form.dataset.subtopicid;
+                    if (db && auth.currentUser) {
+                         loadCommentsForSubTopic(subTopicId);
+                         form.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
+                    } else {
+                        const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+                        const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
+                        if(commentListEl) commentListEl.innerHTML = '';
+                        if(noCommentsEl) {
+                            noCommentsEl.textContent = firebaseConfig ? "Menunggu koneksi..." : "Fitur komentar dinonaktifkan.";
+                            noCommentsEl.classList.remove('hidden');
+                        }
+                        form.classList.add('hidden'); // Sembunyikan form jika firebase belum siap
+                    }
+                });
+
             } else {
+                // Handle konten tidak ditemukan
                 console.error("Konten atau metadata topik tidak ditemukan:", topicKey);
                 contentTitle.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 10px; color: #ef4444;"></i>Konten Tidak Ditemukan`;
                 contentBody.innerHTML = "<p>Maaf, konten untuk topik ini belum tersedia atau tidak ditemukan. Silakan coba topik lain.</p>";
-                
                 topicSelectionScreen.classList.add('hidden');
                 contentDisplayScreen.classList.remove('hidden');
-                contentDisplayScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
-                window.scrollTo(0, 0);
+            }
+        }
+        
+        function generateAnonymousName() {
+            const adjectives = ["Ceria", "Misterius", "Bijak", "Kreatif", "Semangat", "Unik", "Harmonis", "Optimis"];
+            const nouns = ["Pengunjung", "Penjelajah", "Pengamat", "Pencari Ilmu", "Sahabat Kampus", "Kontributor"];
+            const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+            const randomNumber = Math.floor(Math.random() * 1000);
+            return `${randomNoun} ${randomAdjective} #${randomNumber}`;
+        }
+
+        async function submitCommentForSubTopic(event, subTopicId) {
+            event.preventDefault();
+            if (!subTopicId || !db || !auth.currentUser) {
+                alert("Tidak bisa mengirim komentar saat ini. Coba lagi nanti.");
+                return;
+            }
+            const form = event.target;
+            const textarea = form.querySelector('textarea');
+            const button = form.querySelector('button');
+            const text = textarea.value.trim();
+            if (!text) return;
+
+            button.disabled = true;
+            button.textContent = "Mengirim...";
+
+            try {
+                const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
+                await addDoc(collection(db, commentsCollectionPath), {
+                    text: text,
+                    authorName: generateAnonymousName(),
+                    createdAt: serverTimestamp(),
+                    userId: auth.currentUser.uid
+                });
+                textarea.value = '';
+            } catch (error) {
+                console.error(`Error adding comment for ${subTopicId}: `, error);
+                alert("Gagal mengirim komentar. Silakan coba lagi.");
+            } finally {
+                button.disabled = false;
+                button.textContent = "Kirim Komentar";
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function loadCommentsForSubTopic(subTopicId) {
+            const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+            const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
+
+            if (!commentListEl || !noCommentsEl) {
+                console.warn(`Element list/no-comments untuk ${subTopicId} tidak ditemukan.`);
+                return;
+            }
+            
+            if (activeCommentListeners[subTopicId]) {
+                activeCommentListeners[subTopicId](); // Unsubscribe listener lama jika ada
+            }
+            commentListEl.innerHTML = '';
+            noCommentsEl.textContent = "Memuat komentar...";
+            noCommentsEl.classList.remove('hidden');
+
+            const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
+            const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
+
+            activeCommentListeners[subTopicId] = onSnapshot(q, (querySnapshot) => {
+                commentListEl.innerHTML = ''; // Kosongkan untuk update
+                if (querySnapshot.empty) {
+                    noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
+                    noCommentsEl.classList.remove('hidden');
+                } else {
+                    noCommentsEl.classList.add('hidden');
+                    querySnapshot.forEach((doc) => {
+                        displayCommentInList(doc.data(), commentListEl);
+                    });
+                }
+            }, (error) => {
+                console.error(`Error loading comments for ${subTopicId}:`, error);
+                commentListEl.innerHTML = '';
+                noCommentsEl.textContent = "Gagal memuat komentar.";
+                noCommentsEl.classList.remove('hidden');
+            });
+        }
+
+        function displayCommentInList(data, listElement) {
+            const commentItem = document.createElement('div');
+            commentItem.classList.add('comment-item');
+            const authorP = document.createElement('p');
+            authorP.classList.add('comment-author');
+            authorP.textContent = data.authorName || "Pengunjung Anonim";
+            const textP = document.createElement('p');
+            textP.classList.add('comment-text');
+            textP.textContent = data.text;
+            commentItem.appendChild(authorP);
+            commentItem.appendChild(textP);
+            if (data.createdAt && data.createdAt.toDate) {
+                const timestampP = document.createElement('p');
+                timestampP.classList.add('comment-timestamp');
+                timestampP.textContent = data.createdAt.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short'});
+                commentItem.appendChild(timestampP);
+            }
+            listElement.appendChild(commentItem);
+        }
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            const firebaseReady = await initializeFirebase();
             populateTopicCards();
             topicSelectionScreen.style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+            
+            // Jika Firebase tidak siap, kita mungkin ingin menonaktifkan semua form komentar secara global
+            if (!firebaseReady) {
+                document.querySelectorAll('.comment-form').forEach(form => form.classList.add('hidden'));
+                document.querySelectorAll('.no-comments').forEach(el => {
+                    el.textContent = "Fitur komentar dinonaktifkan (Firebase gagal dimuat).";
+                    el.classList.remove('hidden');
+                });
+            }
         });
     </script>
 </body>
