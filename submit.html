@@ -20,7 +20,7 @@
         .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
         .form-input:focus, .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px #dbeafe; outline: none; }
         .form-textarea { min-height: 150px; resize: vertical; }
-        .btn { color: white; padding: 12px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { color: white; padding: 10px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; }
         .btn-primary { background-color: #3b82f6; }
         .btn-primary:hover { background-color: #2563eb; }
         .btn-secondary { background-color: #6b7280; }
@@ -63,15 +63,29 @@
                     <input type="file" id="imageUpload" name="imageUpload" class="form-input" accept="image/png, image/jpeg">
                     <p class="file-upload-note"><b>Catatan:</b> Anda hanya perlu memilih file gambar. Admin akan mengunggahnya nanti. Cukup pastikan nama file-nya unik.</p>
                 </div>
+
                 <div class="mb-4">
-                    <label for="narrative" class="form-label">Ketik Ceritamu Disini</label>
+                    <label for="storyTitle" class="form-label">Judul Cerita</label>
+                    <input type="text" id="storyTitle" name="storyTitle" class="form-input" placeholder="Judul akan dibuat setelah narasi selesai...">
+                </div>
+
+                <div class="mb-4">
+                    <label for="narrative" class="form-label">Narasi Cerita</label>
                     <textarea id="narrative" name="narrative" class="form-textarea" placeholder="Tuliskan kata kunci, poin-poin, atau draf kasar ceritamu..." required></textarea>
                 </div>
-                <div class="text-left mb-6">
-                    <button type="button" id="geminiBtn" class="btn btn-gemini">
-                        <i class="fas fa-magic"></i> Buat Lebih Menarik dengan AI
+                
+                <div class="flex flex-wrap gap-2 justify-start mb-6">
+                    <button type="button" id="ideaBtn" class="btn btn-gemini">
+                        <i class="fas fa-lightbulb"></i> ✨ Dapatkan Ide dari Gambar
+                    </button>
+                    <button type="button" id="narrativeBtn" class="btn btn-gemini">
+                        <i class="fas fa-magic"></i> ✨ Buat Narasi Lebih Menarik
+                    </button>
+                    <button type="button" id="titleBtn" class="btn btn-gemini">
+                        <i class="fas fa-heading"></i> ✨ Buatkan Judul Cerita
                     </button>
                 </div>
+
                 <div class="flex justify-between items-center">
                     <button type="button" id="backToSelectionBtn" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Ganti Topik</button>
                     <button type="submit" id="submitBtn" class="btn btn-primary">
@@ -87,7 +101,6 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
-        // --- KONFIGURASI FIREBASE ---
         const firebaseConfig = {
          apiKey: "AIzaSyA_lcZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
          authDomain: "funny-e436a.firebaseapp.com",
@@ -102,15 +115,17 @@
         let selectedTopic = null;
         const appId = firebaseConfig.appId;
         
-        // --- ELEMEN UI ---
         const topicSelectionScreen = document.getElementById('topicSelectionScreen');
         const formScreen = document.getElementById('formScreen');
         const topicGrid = document.getElementById('topicGrid');
         const formTitle = document.getElementById('formTitle');
         const submissionForm = document.getElementById('submissionForm');
-        const narrativeInput = document.getElementById('narrative');
         const imageInput = document.getElementById('imageUpload');
-        const geminiBtn = document.getElementById('geminiBtn');
+        const storyTitleInput = document.getElementById('storyTitle');
+        const narrativeInput = document.getElementById('narrative');
+        const ideaBtn = document.getElementById('ideaBtn');
+        const narrativeBtn = document.getElementById('narrativeBtn');
+        const titleBtn = document.getElementById('titleBtn');
         const backToSelectionBtn = document.getElementById('backToSelectionBtn');
         const statusModal = document.getElementById('statusModal');
         const modalText = document.getElementById('modalText');
@@ -124,7 +139,6 @@
             { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle" }
         ];
         
-        // --- FUNGSI MODAL ---
         function showModal(text, showLoader = true) {
             modalText.textContent = text;
             loader.style.display = showLoader ? 'block' : 'none';
@@ -134,8 +148,64 @@
         function hideModal() {
             statusModal.classList.add('hidden');
         }
+        
+        function fileToGenerativePart(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    resolve({
+                        inlineData: {
+                            mimeType: file.type,
+                            data: reader.result.split(',')[1]
+                        }
+                    });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        async function callGemini(prompt, imagePart = null) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-        // --- INISIALISASI ---
+            const parts = [{ text: prompt }];
+            if (imagePart) {
+                parts.push(imagePart);
+            }
+
+            const payload = { contents: [{ role: "user", parts: parts }] };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+
+                const result = await response.json();
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Respons AI tidak valid.");
+                }
+            } catch (error) {
+                clearTimeout(timeoutId);
+                console.error('Gemini API error:', error);
+                if (error.name === 'AbortError') {
+                    throw new Error('Waktu tunggu habis. Server AI tidak merespons. Coba lagi.');
+                } else {
+                    throw new Error('Gagal menghubungi AI. Periksa koneksi Anda dan coba lagi.');
+                }
+            }
+        }
+        
         function initializeTopicSelection() {
             topicGrid.innerHTML = '';
             topics.forEach(topic => {
@@ -143,10 +213,7 @@
                 card.className = 'topic-card';
                 card.dataset.key = topic.key;
                 card.dataset.name = topic.name;
-                card.innerHTML = `
-                    <div class="card-icon-container"><i class="${topic.icon}"></i></div>
-                    <h3 class="card-title">${topic.name}</h3>
-                `;
+                card.innerHTML = `<div class="card-icon-container"><i class="${topic.icon}"></i></div><h3 class="card-title">${topic.name}</h3>`;
                 card.addEventListener('click', () => {
                     selectedTopic = { key: card.dataset.key, name: card.dataset.name };
                     formTitle.textContent = `Kirim Cerita untuk: ${selectedTopic.name}`;
@@ -166,63 +233,82 @@
                 console.log("Firebase ready for submission.");
             } catch (e) {
                 console.error("Firebase init error:", e);
-                geminiBtn.disabled = true;
-                document.getElementById('submitBtn').disabled = true;
+                [ideaBtn, narrativeBtn, titleBtn, document.getElementById('submitBtn')].forEach(btn => btn.disabled = true);
                 alert("Tidak dapat terhubung ke server. Fitur pengiriman dinonaktifkan.");
             }
         }
 
-        // --- LOGIKA UTAMA ---
         backToSelectionBtn.addEventListener('click', () => {
             formScreen.classList.add('hidden');
             topicSelectionScreen.classList.remove('hidden');
             submissionForm.reset();
             selectedTopic = null;
         });
+        
+        ideaBtn.addEventListener('click', async () => {
+            const imageFile = imageInput.files[0];
+            if (!imageFile) {
+                alert("Silakan pilih sebuah gambar terlebih dahulu.");
+                return;
+            }
+            showModal("Menganalisis gambar...");
+            ideaBtn.disabled = true;
+            try {
+                const imagePart = await fileToGenerativePart(imageFile);
+                const prompt = "Analisis gambar ini dan berikan ide cerita awal yang singkat dan lucu dalam konteks kehidupan mahasiswa di Indonesia.";
+                const result = await callGemini(prompt, imagePart);
+                narrativeInput.value = result;
+                hideModal();
+            } catch(error) {
+                modalText.textContent = error.message;
+                loader.style.display = 'none';
+                setTimeout(hideModal, 3000);
+            } finally {
+                ideaBtn.disabled = false;
+            }
+        });
 
-        geminiBtn.addEventListener('click', async () => {
+        narrativeBtn.addEventListener('click', async () => {
             const userText = narrativeInput.value.trim();
             if (userText.length < 10) {
                 alert("Tuliskan setidaknya 10 karakter untuk dibantu oleh AI.");
                 return;
             }
-            
             showModal("AI sedang merangkai cerita...");
-            geminiBtn.disabled = true;
-
-            const prompt = `Sebagai seorang penulis konten viral untuk website "Kisah Kampus", ubah teks berikut menjadi narasi yang lebih menarik, dramatis, dan lucu dengan gaya bahasa anak muda. Pertahankan ide pokok dari teks asli. Teks asli: "${userText}"`;
-            
-            const payload = {
-                contents: [{ role: "user", parts: [{ text: prompt }] }],
-            };
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
+            narrativeBtn.disabled = true;
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.statusText}`);
-                }
-
-                const result = await response.json();
-                if (result.candidates && result.candidates[0].content.parts[0].text) {
-                    narrativeInput.value = result.candidates[0].content.parts[0].text;
-                } else {
-                    throw new Error("Respons AI tidak valid.");
-                }
+                const prompt = `Sebagai seorang penulis konten viral untuk website "Kisah Kampus", ubah teks berikut menjadi narasi yang lebih menarik, dramatis, dan lucu dengan gaya bahasa anak muda. Pertahankan ide pokok dari teks asli. Teks asli: "${userText}"`;
+                const result = await callGemini(prompt);
+                narrativeInput.value = result;
                 hideModal();
-            } catch (error) {
-                console.error('Gemini API error:', error);
-                modalText.textContent = 'Gagal menghubungi AI. Silakan coba lagi.';
+            } catch(error) {
+                modalText.textContent = error.message;
                 loader.style.display = 'none';
-                setTimeout(hideModal, 2000);
+                setTimeout(hideModal, 3000);
             } finally {
-                geminiBtn.disabled = false;
+                narrativeBtn.disabled = false;
+            }
+        });
+        
+        titleBtn.addEventListener('click', async () => {
+            const userText = narrativeInput.value.trim();
+            if (userText.length < 20) {
+                alert("Narasi harus lebih dari 20 karakter untuk dibuatkan judul.");
+                return;
+            }
+            showModal("Membuatkan judul viral...");
+            titleBtn.disabled = true;
+            try {
+                const prompt = `Buatkan satu judul yang singkat (maksimal 10 kata), viral, dan lucu untuk cerita kampus berikut. Jangan gunakan tanda kutip pada hasilnya: "${userText}"`;
+                const result = await callGemini(prompt);
+                storyTitleInput.value = result.replace(/"/g, ''); // Hapus tanda kutip jika ada
+                hideModal();
+            } catch(error) {
+                modalText.textContent = error.message;
+                loader.style.display = 'none';
+                setTimeout(hideModal, 3000);
+            } finally {
+                titleBtn.disabled = false;
             }
         });
         
@@ -234,10 +320,11 @@
             }
 
             const imageFile = imageInput.files[0];
+            const storyTitle = storyTitleInput.value.trim();
             const narrativeText = narrativeInput.value.trim();
 
-            if (!narrativeText) {
-                alert("Mohon isi narasi cerita Anda.");
+            if (!storyTitle || !narrativeText) {
+                alert("Mohon isi judul dan narasi cerita Anda.");
                 return;
             }
             
@@ -247,6 +334,7 @@
                 await addDoc(collection(db, `/artifacts/${appId}/public/data/submissions`), {
                     topicKey: selectedTopic.key,
                     topicName: selectedTopic.name,
+                    title: storyTitle,
                     narrative: narrativeText,
                     imageFileName: imageFile ? imageFile.name : 'Tidak ada gambar',
                     status: 'pending_review',
@@ -257,7 +345,7 @@
                 loader.style.display = 'none';
                 setTimeout(() => {
                     hideModal();
-                    backToSelectionBtn.click(); // Kembali ke pemilihan topik
+                    backToSelectionBtn.click();
                 }, 2000);
 
             } catch (error) {
@@ -268,7 +356,6 @@
             }
         });
 
-        // --- EKSEKUSI SAAT HALAMAN DIMUAT ---
         document.addEventListener('DOMContentLoaded', () => {
             initializeTopicSelection();
             initializeFirebase();
