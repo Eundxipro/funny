@@ -3,102 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Judul halaman bisa diubah sesuai topiknya -->
-    <title>Kisah Romansa Kampus - Kisah Kampus Kita</title>
+    <title>Kirim Cerita Anda - Kisah Kampus Kita</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- CSS di-copy dari file asli -->
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; margin: 0; scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; margin: 0; }
         .container { background-color: #ffffff; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 100%; max-width: 800px; text-align: center; }
-        h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; color: #3b82f6; text-align: left; }
-        h3 { font-size: 1.5rem; font-weight: 600; color: #1f2937; margin-top: 40px; margin-bottom: 12px; text-align: left; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
-        h4 { font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-top: 20px; margin-bottom: 15px; text-align: left; }
-        .btn-secondary { background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: background-color 0.3s, transform 0.2s; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; border: none; text-decoration: none; }
-        .btn-secondary:hover { background-color: #4b5563; transform: translateY(-2px); }
-        .content-image { max-width: 100%; height: auto; border-radius: 12px; margin-top: 12px; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .content-text { text-align: left; line-height: 1.8; color: #374151; font-size: 1rem; }
-        .content-text p, .content-text ul { margin-bottom: 1.25rem; }
-        .content-text ul:not(.sub-topic-shortcut-list) { list-style-type: none; padding-left: 0; }
-        .content-text li:not(.shortcut-item) { margin-bottom: 0.75rem; padding-left: 1.75em; position: relative; }
-        .content-text li:not(.shortcut-item)::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: #3b82f6; font-size: 1em; }
-        .sub-topic-shortcuts { margin-top: 0px; margin-bottom: 30px; padding: 15px; background-color: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb; text-align: left; }
-        .sub-topic-shortcuts h4 { font-size: 1.1rem; font-weight: 600; color: #3b82f6; margin-top:0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #dbeafe; }
-        .sub-topic-shortcut-list { list-style: none; padding-left: 0; }
-        .sub-topic-shortcut-list .shortcut-item { margin-bottom: 8px; padding-left: 0; }
-        .sub-topic-shortcut-list .shortcut-item::before { display: none; }
-        .sub-topic-shortcut-list .shortcut-item a { text-decoration: none; color: #1f2937; display: block; padding: 10px 12px; border-radius: 6px; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; font-size: 0.95rem; }
-        .sub-topic-shortcut-list .shortcut-item a:hover { background-color: #e0e7ff; color: #3b82f6; transform: translateX(3px); }
-        .sub-topic-shortcut-list .shortcut-item a strong { color: #3b82f6; font-weight: 600; }
-        .sub-topic-shortcut-list .shortcut-item .shortcut-subtitle { font-size: 0.8rem; color: #6b7280; display: block; margin-top: 2px; }
-        .sub-topic-comment-section { margin-top: 25px; padding-top: 15px; border-top: 1px solid #e0e7ff; text-align: left; }
-        .comment-list { max-height: 300px; overflow-y: auto; margin-bottom: 15px; padding-right: 10px; }
-        .comment-item { background-color: #f9fafb; padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #e5e7eb; }
-        .comment-author { font-weight: 600; color: #3b82f6; margin-bottom: 3px; font-size: 0.85rem; }
-        .comment-text { font-size: 0.9rem; color: #374151; line-height: 1.5; word-wrap: break-word; }
-        .comment-timestamp { font-size: 0.7rem; color: #9ca3af; margin-top: 5px; text-align: right; }
-        .comment-form textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #d1d5db; min-height: 60px; margin-bottom: 8px; font-size: 0.9rem; resize: vertical; }
-        .comment-form button { background-color: #3b82f6; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; border: none; font-size: 0.9rem; }
-        .comment-form button:hover { background-color: #2563eb; }
-        .comment-form button:disabled { background-color: #9ca3af; cursor: not-allowed; }
-        .no-comments { color: #6b7280; text-align: center; padding: 15px; font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .topic-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; }
+        .topic-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
+        .card-icon-container { font-size: 2.5rem; color: #3b82f6; margin-bottom: 16px; width: 60px; height: 60px; background-color: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .card-title { font-size: 1.25rem; font-weight: 600; color: #111827; }
+        #topicGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .form-label { display: block; text-align: left; font-weight: 600; margin-bottom: 8px; color: #374151; }
+        .form-input, .form-textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-input:focus, .form-textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px #dbeafe; outline: none; }
+        .form-textarea { min-height: 150px; resize: vertical; }
+        .btn { color: white; padding: 12px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background-color: #3b82f6; }
+        .btn-primary:hover { background-color: #2563eb; }
+        .btn-secondary { background-color: #6b7280; }
+        .btn-secondary:hover { background-color: #4b5563; }
+        .btn-gemini { background: linear-gradient(to right, #4f46e5, #818cf8); }
+        .btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background-color: white; padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .file-upload-note { text-align: left; font-size: 0.8rem; color: #6b7280; margin-top: 8px; background-color: #f9fafb; padding: 8px; border-radius: 6px;}
         .screen { animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <div class="container screen">
-        <!-- Tombol kembali sekarang adalah link biasa -->
-        <a href="index.html" id="backToTopicsButton" class="btn-secondary"><i class="fas fa-chevron-left"></i> Kembali ke Topik</a>
-
-        <!-- Judul Utama Konten -->
-        <h2><i class="fas fa-heartbeat" style="margin-right: 10px; color: #3b82f6;"></i>Kisah Romansa di Kebun Percobaan</h2>
-        
-        <!-- ======================================================= -->
-        <!-- == MULAI PASTE KONTEN HTML ANDA DARI SINI == -->
-        <!-- ======================================================= -->
-        <div id="contentBody" class="content-text">
-            <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Kisah:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#romansa-kisah-1"><strong>Kisah #1:</strong> <span class="shortcut-subtitle">Pertemuan di Praktikum Jagung</span></a></li><li class="shortcut-item"><a href="#romansa-kisah-2"><strong>Kisah #2:</strong> <span class="shortcut-subtitle">Momen Lain di Kebun?</span></a></li></ul></div><div id="romansa-kisah-1"><h3>Kisah #1: Pertemuan di Praktikum Jagung</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2019.46.45.jpeg" alt="Pertemuan di kebun percobaan Fakultas Pertanian" class="content-image"><p>Di tengah hijaunya kebun percobaan Fakultas Pertanian, di antara aroma tanah basah dan semangat praktikum jagung, sebuah pertemuan tak terduga terjadi. Dua pasang mata bertemu, mungkin awalnya hanya sebatas rekan praktikum, namun siapa sangka momen sederhana itu terekam dalam jejak digital ini? Apakah ini awal dari sebuah kisah romansa yang akan mekar seiring tumbuhnya sang jagung? Hanya waktu yang bisa menjawab...</p>
-            
-            <!-- Bagian Komentar untuk sub-topik ini -->
-            <div class="sub-topic-comment-section" id="comment-section-romansa-kisah-1">
-                <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
-                <div id="comment-list-romansa-kisah-1" class="comment-list"></div>
-                <p class="no-comments" id="no-comments-romansa-kisah-1" style="display: block;">Memuat komentar...</p> 
-                <form class="comment-form" data-subtopicid="romansa-kisah-1">
-                    <textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea>
-                    <button type="submit">Kirim Komentar</button>
-                </form>
-            </div>
-
-            </div><div id="romansa-kisah-2"><h3>Kisah #2: Momen Lain di Kebun?</h3><img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-05-31%20at%2020.52.34.jpeg" alt="Kisah Romansa Kampus #2" class="content-image"><p>Satu lagi potret dari kebun percobaan yang menyimpan cerita. Apakah ini kelanjutan dari kisah pertama, atau sebuah babak baru dengan tokoh yang berbeda? Senyum yang terukir dan suasana akrab yang terpancar seolah memberi isyarat bahwa benih-benih kedekatan mungkin telah tersemai. Kebun percobaan tak hanya menjadi saksi pertumbuhan tanaman, tapi juga tumbuhnya perasaan.</p>
-            
-            <!-- Bagian Komentar untuk sub-topik ini -->
-            <div class="sub-topic-comment-section" id="comment-section-romansa-kisah-2">
-                <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
-                <div id="comment-list-romansa-kisah-2" class="comment-list"></div>
-                <p class="no-comments" id="no-comments-romansa-kisah-2" style="display: block;">Memuat komentar...</p> 
-                <form class="comment-form" data-subtopicid="romansa-kisah-2">
-                    <textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea>
-                    <button type="submit">Kirim Komentar</button>
-                </form>
-            </div>
+    <div class="container">
+        <!-- Modal for Loading/Success -->
+        <div id="statusModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div id="loader" class="loader"></div>
+                <p id="modalText" class="font-semibold text-lg"></p>
             </div>
         </div>
-        <!-- ======================================================= -->
-        <!-- == AKHIR DARI BAGIAN PASTE KONTEN HTML == -->
-        <!-- ======================================================= -->
 
+        <!-- Screen 1: Topic Selection -->
+        <div id="topicSelectionScreen" class="screen">
+            <h1 class="text-3xl font-bold mb-2 text-gray-800">Update Kisah yang Kamu Miliki</h1>
+            <p class="text-gray-600 mb-8">Pilih kategori topik untuk ceritamu.</p>
+            <div id="topicGrid"></div>
+             <a href="index.html" class="btn btn-secondary mt-8"><i class="fas fa-arrow-left"></i> Kembali ke Halaman Utama</a>
+        </div>
+
+        <!-- Screen 2: Submission Form -->
+        <div id="formScreen" class="hidden screen">
+            <h2 id="formTitle" class="text-2xl font-bold mb-6 text-left text-blue-600"></h2>
+            <form id="submissionForm">
+                <div class="mb-4">
+                    <label for="imageUpload" class="form-label">Gambar Pendukung</label>
+                    <input type="file" id="imageUpload" name="imageUpload" class="form-input" accept="image/png, image/jpeg">
+                    <p class="file-upload-note"><b>Catatan:</b> Anda hanya perlu memilih file gambar. Admin akan mengunggahnya nanti. Cukup pastikan nama file-nya unik.</p>
+                </div>
+                <div class="mb-4">
+                    <label for="narrative" class="form-label">Ketik Ceritamu Disini</label>
+                    <textarea id="narrative" name="narrative" class="form-textarea" placeholder="Tuliskan kata kunci, poin-poin, atau draf kasar ceritamu..." required></textarea>
+                </div>
+                <div class="text-left mb-6">
+                    <button type="button" id="geminiBtn" class="btn btn-gemini">
+                        <i class="fas fa-magic"></i> Buat Lebih Menarik dengan AI
+                    </button>
+                </div>
+                <div class="flex justify-between items-center">
+                    <button type="button" id="backToSelectionBtn" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Ganti Topik</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Kirim Cerita
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script type="module">
-        // Import fungsi yang dibutuhkan dari Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // KONFIGURASI FIREBASE ANDA (Harus ada di setiap halaman dengan komentar)
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- KONFIGURASI FIREBASE ---
         const firebaseConfig = {
          apiKey: "AIzaSyA_lcZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
          authDomain: "funny-e436a.firebaseapp.com",
@@ -110,81 +99,181 @@
         };
         
         let app, db, auth;
-        let activeCommentListeners = {};
-        const appId = (firebaseConfig && firebaseConfig.appId) ? firebaseConfig.appId : 'default-app-id-error-config';
+        let selectedTopic = null;
+        const appId = firebaseConfig.appId;
+        
+        // --- ELEMEN UI ---
+        const topicSelectionScreen = document.getElementById('topicSelectionScreen');
+        const formScreen = document.getElementById('formScreen');
+        const topicGrid = document.getElementById('topicGrid');
+        const formTitle = document.getElementById('formTitle');
+        const submissionForm = document.getElementById('submissionForm');
+        const narrativeInput = document.getElementById('narrative');
+        const imageInput = document.getElementById('imageUpload');
+        const geminiBtn = document.getElementById('geminiBtn');
+        const backToSelectionBtn = document.getElementById('backToSelectionBtn');
+        const statusModal = document.getElementById('statusModal');
+        const modalText = document.getElementById('modalText');
+        const loader = document.getElementById('loader');
 
-        // Fungsi-fungsi yang sama dari file asli Anda
-        function generateAnonymousName() {
-            const adjectives = ["Ceria", "Misterius", "Bijak", "Kreatif", "Semangat", "Unik", "Harmonis", "Optimis"];
-            const nouns = ["Pengunjung", "Penjelajah", "Pengamat", "Pencari Ilmu", "Sahabat Kampus", "Kontributor"];
-            const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-            const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-            const randomNumber = Math.floor(Math.random() * 1000);
-            return `${randomNoun} ${randomAdjective} #${randomNumber}`;
+        const topics = [
+            { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat" },
+            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-ghost" },
+            { key: "gamer", name: "Arena Gamer", icon: "fas fa-headset" },
+            { key: "tugas", name: "Pejuang Deadline", icon: "fas fa-hourglass-half" },
+            { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle" }
+        ];
+        
+        // --- FUNGSI MODAL ---
+        function showModal(text, showLoader = true) {
+            modalText.textContent = text;
+            loader.style.display = showLoader ? 'block' : 'none';
+            statusModal.classList.remove('hidden');
         }
 
-        async function submitCommentForSubTopic(event, subTopicId) {
-            event.preventDefault();
-            if (!subTopicId || !db || !auth || !auth.currentUser) { return; }
-            const form = event.target;
-            const textarea = form.querySelector('textarea');
-            const button = form.querySelector('button');
-            const text = textarea.value.trim();
-            if (!text) return;
+        function hideModal() {
+            statusModal.classList.add('hidden');
+        }
 
-            button.disabled = true;
-            button.textContent = "Mengirim...";
+        // --- INISIALISASI ---
+        function initializeTopicSelection() {
+            topicGrid.innerHTML = '';
+            topics.forEach(topic => {
+                const card = document.createElement('div');
+                card.className = 'topic-card';
+                card.dataset.key = topic.key;
+                card.dataset.name = topic.name;
+                card.innerHTML = `
+                    <div class="card-icon-container"><i class="${topic.icon}"></i></div>
+                    <h3 class="card-title">${topic.name}</h3>
+                `;
+                card.addEventListener('click', () => {
+                    selectedTopic = { key: card.dataset.key, name: card.dataset.name };
+                    formTitle.textContent = `Kirim Cerita untuk: ${selectedTopic.name}`;
+                    topicSelectionScreen.classList.add('hidden');
+                    formScreen.classList.remove('hidden');
+                });
+                topicGrid.appendChild(card);
+            });
+        }
+
+        async function initializeFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                await signInAnonymously(auth);
+                console.log("Firebase ready for submission.");
+            } catch (e) {
+                console.error("Firebase init error:", e);
+                geminiBtn.disabled = true;
+                document.getElementById('submitBtn').disabled = true;
+                alert("Tidak dapat terhubung ke server. Fitur pengiriman dinonaktifkan.");
+            }
+        }
+
+        // --- LOGIKA UTAMA ---
+        backToSelectionBtn.addEventListener('click', () => {
+            formScreen.classList.add('hidden');
+            topicSelectionScreen.classList.remove('hidden');
+            submissionForm.reset();
+            selectedTopic = null;
+        });
+
+        geminiBtn.addEventListener('click', async () => {
+            const userText = narrativeInput.value.trim();
+            if (userText.length < 10) {
+                alert("Tuliskan setidaknya 10 karakter untuk dibantu oleh AI.");
+                return;
+            }
+            
+            showModal("AI sedang merangkai cerita...");
+            geminiBtn.disabled = true;
+
+            const prompt = `Sebagai seorang penulis konten viral untuk website "Kisah Kampus", ubah teks berikut menjadi narasi yang lebih menarik, dramatis, dan lucu dengan gaya bahasa anak muda. Pertahankan ide pokok dari teks asli. Teks asli: "${userText}"`;
+            
+            const payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+            };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
             try {
-                const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
-                await addDoc(collection(db, commentsCollectionPath), {
-                    text: text,
-                    authorName: generateAnonymousName(),
-                    createdAt: serverTimestamp(),
-                    userId: auth.currentUser.uid
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-                textarea.value = '';
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    narrativeInput.value = result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Respons AI tidak valid.");
+                }
+                hideModal();
             } catch (error) {
-                console.error(`Error adding comment for ${subTopicId}: `, error);
+                console.error('Gemini API error:', error);
+                modalText.textContent = 'Gagal menghubungi AI. Silakan coba lagi.';
+                loader.style.display = 'none';
+                setTimeout(hideModal, 2000);
             } finally {
-                button.disabled = false;
-                button.textContent = "Kirim Komentar";
+                geminiBtn.disabled = false;
             }
-        }
-
-        function displayCommentInList(data, listElement) {
-            const commentItem = document.createElement('div');
-            commentItem.classList.add('comment-item');
-            const authorP = document.createElement('p');
-            authorP.classList.add('comment-author');
-            authorP.textContent = data.authorName || "Pengunjung Anonim";
-            const textP = document.createElement('p');
-            textP.classList.add('comment-text');
-            textP.textContent = data.text;
-            commentItem.appendChild(authorP);
-            commentItem.appendChild(textP);
-            if (data.createdAt && data.createdAt.toDate) {
-                const timestampP = document.createElement('p');
-                timestampP.classList.add('comment-timestamp');
-                timestampP.textContent = data.createdAt.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short'});
-                commentItem.appendChild(timestampP);
+        });
+        
+        submissionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!selectedTopic || !db) {
+                alert("Terjadi kesalahan. Silakan pilih topik lagi.");
+                return;
             }
-            listElement.appendChild(commentItem);
-        }
 
-        function loadCommentsForSubTopic(subTopicId) {
-            const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
-            const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
-            if (!commentListEl || !noCommentsEl) return;
+            const imageFile = imageInput.files[0];
+            const narrativeText = narrativeInput.value.trim();
+
+            if (!narrativeText) {
+                alert("Mohon isi narasi cerita Anda.");
+                return;
+            }
             
-            if (activeCommentListeners[subTopicId]) activeCommentListeners[subTopicId]();
-            commentListEl.innerHTML = '';
-            noCommentsEl.textContent = "Memuat komentar...";
-            noCommentsEl.style.display = 'block';
+            showModal("Mengirim ceritamu...");
+            
+            try {
+                await addDoc(collection(db, `/artifacts/${appId}/public/data/submissions`), {
+                    topicKey: selectedTopic.key,
+                    topicName: selectedTopic.name,
+                    narrative: narrativeText,
+                    imageFileName: imageFile ? imageFile.name : 'Tidak ada gambar',
+                    status: 'pending_review',
+                    submittedAt: serverTimestamp()
+                });
 
-            const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
-            const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
+                modalText.textContent = 'Cerita berhasil dikirim!';
+                loader.style.display = 'none';
+                setTimeout(() => {
+                    hideModal();
+                    backToSelectionBtn.click(); // Kembali ke pemilihan topik
+                }, 2000);
 
-            activeCommentListeners[subTopicId] = onSnapshot(q, (querySnapshot) => {
-                commentListEl.innerHTML = ''; 
-                if (querySnapshot
+            } catch (error) {
+                console.error("Firestore submission error:", error);
+                modalText.textContent = 'Gagal mengirim cerita.';
+                loader.style.display = 'none';
+                setTimeout(hideModal, 2000);
+            }
+        });
+
+        // --- EKSEKUSI SAAT HALAMAN DIMUAT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTopicSelection();
+            initializeFirebase();
+        });
+
+    </script>
+</body>
+</html>
