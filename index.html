@@ -1,74 +1,102 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisah Kampus: Jelajahi Fakta & Cerita Seru!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; margin: 0; }
-        .container { background-color: #ffffff; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 100%; max-width: 800px; text-align: center; }
-        .site-header { margin-bottom: 40px; }
-        .site-header h1 { font-size: 2.5rem; font-weight: 700; color: #3b82f6; margin-bottom: 8px; }
-        .site-header p { font-size: 1.125rem; color: #6b7280; max-width: 600px; margin: 0 auto; }
-        .topic-card-link { text-decoration: none; }
-        .topic-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 220px; height: 100%; }
-        .topic-card:hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
-        .card-icon-container { font-size: 2.5rem; color: #3b82f6; margin-bottom: 16px; width: 60px; height: 60px; background-color: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .card-title { font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 8px; }
-        .card-tagline { font-size: 0.875rem; color: #4b5563; line-height: 1.5; }
-        #topicGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px; }
-        .screen { animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kisah Kampus Kita - Cerita & Fakta Mahasiswa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #374151;
+      scroll-behavior: smooth;
+    }
+    /* Custom scrollbar for card grid */
+    #topicGrid::-webkit-scrollbar {
+      height: 8px;
+    }
+    #topicGrid::-webkit-scrollbar-thumb {
+      background-color: #3b82f6;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <div id="topicSelectionScreen" class="screen">
-            <div class="site-header">
-                <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Kisah Kampus Kita</h1>
-                <p>Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!</p>
-            </div>
-            <div id="topicGrid"></div>
-        </div>
+<body class="antialiased">
+  <!-- Sticky Header Nav -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-extrabold text-blue-600 select-none">
+        Kisah Kampus Kita
+      </a>
+      <nav class="space-x-6 text-gray-600 font-medium text-sm hidden md:flex">
+        <a href="#" class="hover:text-blue-600 transition duration-300">Home</a>
+        <a href="#topicGrid" class="hover:text-blue-600 transition duration-300">Topik</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Tentang</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Kontak</a>
+        <a href="https://instagram.com/yudaprawira_m.p" target="_blank" class="hover:text-blue-600 transition duration-300">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </nav>
     </div>
+  </header>
 
-    <script type="module">
-        const topics = [
-            { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat", tagline: "Debar cinta & pertemuan tak terlupakan di tengah hiruk pikuk akademis." },
-            { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-ghost", tagline: "Kejadian 'luar biasa' yang hanya anak kampus yang paham." },
-            { key: "gamer", name: "Arena Gamer", icon: "fas fa-headset", tagline: "Dari noob hingga pro, kisah gamer kampus yang seru!" },
-            { key: "tugas", name: "Pejuang Deadline", icon: "fas fa-hourglass-half", tagline: "Tips & trik taklukkan tugas, sebelum bendera kuning berkibar!" },
-            { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
-        ];
+  <main class="max-w-7xl mx-auto px-6 py-20 flex flex-col gap-16">
+    <!-- Hero Section -->
+    <section class="text-center max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+        Jelajahi Kisah & Fakta Seru Kehidupan Mahasiswa Kampus Kita
+      </h1>
+      <p class="text-lg md:text-xl text-gray-500 mb-10 max-w-3xl mx-auto">
+        Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!
+      </p>
+      <a href="#topicGrid" class="inline-block bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 select-none">
+        Mulai Jelajah Topik
+      </a>
+    </section>
 
-        function populateTopicCards() {
-            const topicGrid = document.getElementById('topicGrid');
-            topicGrid.innerHTML = '';
-            topics.forEach(topic => {
-                // Membuat elemen <a> yang akan membungkus kartu
-                const link = document.createElement('a');
-                link.href = `${topic.key}.html`; // Link menuju ke file baru, misal: "romansa.html"
-                link.classList.add('topic-card-link');
+    <!-- Topics Grid -->
+    <section id="topicGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+      <!-- Cards will be generated by script -->
+    </section>
+  </main>
 
-                // Membuat konten kartu di dalam link
-                link.innerHTML = `
-                    <div class="topic-card">
-                        <div class="card-icon-container"><i class="${topic.icon}"></i></div>
-                        <h3 class="card-title">${topic.name}</h3>
-                        <p class="card-tagline">${topic.tagline}</p>
-                    </div>
-                `;
-                topicGrid.appendChild(link);
-            });
-        }
+  <script>
+    const topics = [
+      { key: "romansa", name: "Romansa Kampus", icon: "fas fa-heartbeat", tagline: "Debar cinta & pertemuan tak terlupakan di tengah hiruk pikuk akademis." },
+      { key: "anomali", name: "Anomali Mahasiswa", icon: "fas fa-ghost", tagline: "Kejadian 'luar biasa' yang hanya anak kampus yang paham." },
+      { key: "gamer", name: "Arena Gamer", icon: "fas fa-headset", tagline: "Dari noob hingga pro, kisah gamer kampus yang seru!" },
+      { key: "tugas", name: "Pejuang Deadline", icon: "fas fa-hourglass-half", tagline: "Tips & trik taklukkan tugas, sebelum bendera kuning berkibar!" },
+      { key: "fyi", name: "FYI Kampus", icon: "fas fa-info-circle", tagline: "Info wajib tahu biar nggak ketinggalan berita penting." }
+    ];
 
-        document.addEventListener('DOMContentLoaded', function() {
-            populateTopicCards();
-            document.getElementById('topicSelectionScreen').style.animation = 'fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
-        });
-    </script>
+    const topicGrid = document.getElementById('topicGrid');
+    topics.forEach(topic => {
+      const link = document.createElement('a');
+      link.href = `${topic.key}.html`;
+      link.className = 'group rounded-xl bg-white p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between no-underline';
+
+      link.innerHTML = `
+        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-blue-600 mb-6 mx-auto transition-transform duration-300 group-hover:scale-110">
+          <i class="${topic.icon} fa-lg"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2 text-center group-hover:text-blue-600 transition-colors duration-300">${topic.name}</h3>
+        <p class="text-sm text-gray-500 text-center leading-relaxed">${topic.tagline}</p>
+      `;
+
+      topicGrid.appendChild(link);
+    });
+  </script>
 </body>
 </html>
