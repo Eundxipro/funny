@@ -21,6 +21,15 @@
         .content-text ul:not(.sub-topic-shortcut-list) { list-style-type: none; padding-left: 0; }
         .content-text li:not(.shortcut-item) { margin-bottom: 0.75rem; padding-left: 1.75em; position: relative; }
         .content-text li:not(.shortcut-item)::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: #3b82f6; font-size: 1em; }
+        .sub-topic-shortcuts { margin-top: 0px; margin-bottom: 30px; padding: 15px; background-color: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb; text-align: left; }
+        .sub-topic-shortcuts h4 { font-size: 1.1rem; font-weight: 600; color: #3b82f6; margin-top:0; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid #dbeafe; }
+        .sub-topic-shortcut-list { list-style: none; padding-left: 0; }
+        .sub-topic-shortcut-list .shortcut-item { margin-bottom: 8px; padding-left: 0; }
+        .sub-topic-shortcut-list .shortcut-item::before { display: none; }
+        .sub-topic-shortcut-list .shortcut-item a { text-decoration: none; color: #1f2937; display: block; padding: 10px 12px; border-radius: 6px; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; font-size: 0.95rem; }
+        .sub-topic-shortcut-list .shortcut-item a:hover { background-color: #e0e7ff; color: #3b82f6; transform: translateX(3px); }
+        .sub-topic-shortcut-list .shortcut-item a strong { color: #3b82f6; font-weight: 600; }
+        .sub-topic-shortcut-list .shortcut-item .shortcut-subtitle { font-size: 0.8rem; color: #6b7280; display: block; margin-top: 2px; }
         .sub-topic-comment-section { margin-top: 25px; padding-top: 15px; border-top: 1px solid #e0e7ff; text-align: left; }
         .comment-list { max-height: 300px; overflow-y: auto; margin-bottom: 15px; padding-right: 10px; }
         .comment-item { background-color: #f9fafb; padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #e5e7eb; }
@@ -43,13 +52,29 @@
         <h2><i class="fas fa-info-circle" style="margin-right: 10px; color: #3b82f6;"></i>FYI Terkini: Jangan Sampai Ketinggalan Info Penting Kampus Pertanian!</h2>
         
         <div id="contentBody" class="content-text">
-            <p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p><ul><li>Jadwal Seminar & Workshop Terbaru.</li><li>Informasi Beasiswa yang Sedang Dibuka.</li><li>Lowongan Asisten Dosen atau Asisten Praktikum.</li><li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li><li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li></ul><p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>
-            <div class="sub-topic-comment-section" id="comment-section-fyi-main">
-                <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
-                <div id="comment-list-fyi-main" class="comment-list"></div>
-                <p class="no-comments" id="no-comments-fyi-main" style="display: block;">Memuat komentar...</p> 
-                <form class="comment-form" data-subtopicid="fyi-main"><textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea><button type="submit">Kirim Komentar</button></form>
+            <div class="sub-topic-shortcuts"><h4><i class="fas fa-stream" style="margin-right: 8px;"></i>Pintasan Info:</h4><ul class="sub-topic-shortcut-list"><li class="shortcut-item"><a href="#fyi-1"><strong>FYI #1:</strong> <span class="shortcut-subtitle">Gosip Part-Time & Cinlok?</span></a></li></ul></div>
+            
+            <p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian.</p>
+            
+            <div id="fyi-1">
+                <h3>FYI #1: Gosip Part-Time & Cinta Lokasi?</h3>
+                <img src="https://raw.githubusercontent.com/Eundxipro/funny/main/WhatsApp%20Image%202025-06-02%20at%2009.54.12.jpeg" alt="Mahasiswa part-time dengan rekan kerja" class="content-image">
+                <p>Di sela-sela padatnya jadwal kuliah dan praktikum, seorang mahasiswa tangguh mendedikasikan waktunya untuk bekerja paruh waktu. Selain menambah uang jajan, katanya sih buat nambah pengalaman. Tapi, sepertinya ada 'pengalaman' lain yang didapat!</p>
+                <p>Tersebar foto mesra (atau mungkin cuma foto biasa yang dibumbui gosip) sang mahasiswa dengan seorang rekan kerja wanitanya. Apakah ini bukti bahwa kerja paruh waktu tidak hanya menghasilkan cuan, tapi juga benih-benih asmara? Apakah ini yang dinamakan 'cinta lokasi' alias cinlok? Atau jangan-jangan, mereka hanya sedang membahas target penjualan sambil minum es teh? Biarkan foto ini menjadi misteri yang menghibur kita semua. Yang jelas, semangatnya untuk kuliah sambil kerja patut kita acungi jempol! 👍</p>
+                <div class="sub-topic-comment-section" id="comment-section-fyi-1">
+                    <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
+                    <div id="comment-list-fyi-1" class="comment-list"></div>
+                    <p class="no-comments" id="no-comments-fyi-1" style="display: block;">Memuat komentar...</p> 
+                    <form class="comment-form" data-subtopicid="fyi-1"><textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea><button type="submit">Kirim Komentar</button></form>
+                </div>
             </div>
+
+            <ul>
+                <li>Jadwal Seminar & Workshop Terbaru (Segera Hadir).</li>
+                <li>Informasi Beasiswa yang Sedang Dibuka (Segera Hadir).</li>
+                <li>Lowongan Asisten Dosen atau Asisten Praktikum (Segera Hadir).</li>
+                <li>Agenda Kegiatan BEM dan Himpunan Mahasiswa (Segera Hadir).</li>
+            </ul>
         </div>
 
     </div>
