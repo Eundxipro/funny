@@ -41,7 +41,25 @@
       <a href="#" class="text-2xl font-extrabold text-blue-600 select-none">
         Kisah Kampus Kita
       </a>
-      <nav class="space-x-6 text-gray-600 font-medium text-sm hidden md:flex">
+      <nav class="hidden md:flex space-x-6 text-gray-600 font-medium text-sm">
+        <a href="#" class="hover:text-blue-600 transition duration-300">Home</a>
+        <a href="#topicGrid" class="hover:text-blue-600 transition duration-300">Topik</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Tentang</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Kontak</a>
+        <a href="https://instagram.com/yudaprawira_m.p" target="_blank" class="hover:text-blue-600 transition duration-300">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </nav>
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+          <i class="fas fa-bars fa-lg"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+      <nav class="flex flex-col space-y-2 px-6 py-4">
         <a href="#" class="hover:text-blue-600 transition duration-300">Home</a>
         <a href="#topicGrid" class="hover:text-blue-600 transition duration-300">Topik</a>
         <a href="#" class="hover:text-blue-600 transition duration-300">Tentang</a>
@@ -100,6 +118,14 @@
       `;
 
       topicGrid.appendChild(link);
+    });
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
     });
   </script>
 </body>
