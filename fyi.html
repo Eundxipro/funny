@@ -109,11 +109,27 @@
 
         async function submitCommentForSubTopic(event, subTopicId) {
             event.preventDefault();
-            if (!subTopicId || !db || !auth || !auth.currentUser) { return; }
             const form = event.target;
             const textarea = form.querySelector('textarea');
             const button = form.querySelector('button');
             const text = textarea.value.trim();
+
+            if (!db || !auth || !auth.currentUser) {
+                console.error("Submit blocked: Firebase not ready or user not signed in.");
+                const prevError = form.querySelector('.error-message');
+                if (prevError) prevError.remove();
+                
+                const errorMsg = document.createElement('p');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'Gagal mengirim. Harap segarkan halaman.';
+                errorMsg.style.color = 'red';
+                errorMsg.style.fontSize = '0.8rem';
+                errorMsg.style.marginTop = '4px';
+                form.appendChild(errorMsg);
+                setTimeout(() => errorMsg.remove(), 4000);
+                return;
+            }
+
             if (!text) return;
 
             button.disabled = true;
@@ -128,6 +144,8 @@
                     userId: auth.currentUser.uid
                 });
                 textarea.value = '';
+                const prevError = form.querySelector('.error-message');
+                if (prevError) prevError.remove();
             } catch (error) {
                 console.error(`Error adding comment for ${subTopicId}: `, error);
             } finally {
@@ -176,7 +194,7 @@
                     noCommentsEl.style.display = 'block'; 
                 } else {
                     noCommentsEl.style.display = 'none'; 
-                    querySnapshot.forEach((doc) => { displayCommentInList(doc.data(), listElement); });
+                    querySnapshot.forEach((doc) => { displayCommentInList(doc.data(), commentListEl); });
                 }
             }, (error) => {
                 console.error(`Error loading comments:`, error);
