@@ -187,4 +187,49 @@
 
             activeCommentListeners[subTopicId] = onSnapshot(q, (querySnapshot) => {
                 commentListEl.innerHTML = ''; 
-                if (querySnapshot
+                if (querySnapshot.empty) {
+                    noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
+                    noCommentsEl.style.display = 'block'; 
+                } else {
+                    noCommentsEl.style.display = 'none'; 
+                    querySnapshot.forEach((doc) => { displayCommentInList(doc.data(), commentListEl); });
+                }
+            }, (error) => {
+                console.error(`Error loading comments:`, error);
+                noCommentsEl.textContent = "Gagal memuat komentar.";
+                noCommentsEl.style.display = 'block';
+            });
+        }
+
+        // Fungsi utama yang dijalankan saat halaman dimuat
+        async function initializePage() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setLogLevel('error');
+                await signInAnonymously(auth);
+                console.log("Firebase initialized and user signed in for this page.");
+
+                // Setelah Firebase siap, cari semua form komentar di halaman ini dan aktifkan
+                document.querySelectorAll('.comment-form').forEach(form => {
+                    const subTopicId = form.dataset.subtopicid;
+                    if(subTopicId) {
+                        loadCommentsForSubTopic(subTopicId);
+                        form.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
+                    }
+                });
+
+            } catch(e) {
+                console.error("Critical Firebase Error on this page:", e);
+                // Nonaktifkan semua form komentar jika Firebase gagal
+                document.querySelectorAll('.comment-form').forEach(form => form.style.display = 'none');
+                document.querySelectorAll('.no-comments').forEach(el => el.textContent = 'Fitur komentar gagal dimuat.');
+            }
+        }
+        
+        // Jalankan fungsi utama saat dokumen (HTML) selesai dimuat
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
