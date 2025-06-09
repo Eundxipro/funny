@@ -19,7 +19,8 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: #ffffff;
+      background: url('https://raw.githubusercontent.com/Eundxipro/funny/main/gambar%20kampus%20fp.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #374151;
       scroll-behavior: smooth;
     }
@@ -54,14 +55,15 @@
 
   <main class="max-w-7xl mx-auto px-6 py-20 flex flex-col gap-16">
     <!-- Hero Section -->
-    <section class="text-center max-w-4xl mx-auto">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+    <section class="text-center max-w-4xl mx-auto relative">
+      <div class="absolute inset-0 bg-black opacity-50 rounded-lg"></div> <!-- Background overlay -->
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6 relative z-10">
         Jelajahi Kisah & Fakta Seru Kehidupan Mahasiswa Kampus Kita
       </h1>
-      <p class="text-lg md:text-xl text-gray-500 mb-10 max-w-3xl mx-auto">
+      <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto relative z-10">
         Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!
       </p>
-      <a href="#topicGrid" class="inline-block bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 select-none">
+      <a href="#topicGrid" class="inline-block bg-blue-600 text-white text-lg font-semibold px-8 py-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 select-none relative z-10">
         Mulai Jelajah Topik
       </a>
     </section>
