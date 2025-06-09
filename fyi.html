@@ -3,56 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisah Kampus: Jelajahi Fakta & Cerita Seru!</title>
+    <title>FYI Kampus - Kisah Kampus Kita</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* CSS styles here */
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; color: #1c1e21; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; margin: 0; scroll-behavior: smooth; }
+        .container { background-color: #ffffff; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 100%; max-width: 800px; text-align: center; }
+        h2 { font-size: 2rem; font-weight: 600; margin-bottom: 12px; color: #3b82f6; text-align: left; }
+        h3 { font-size: 1.5rem; font-weight: 600; color: #1f2937; margin-top: 40px; margin-bottom: 12px; text-align: left; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }
+        h4 { font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-top: 20px; margin-bottom: 15px; text-align: left; }
+        .btn-secondary { background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: background-color 0.3s, transform 0.2s; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; border: none; text-decoration: none; }
+        .btn-secondary:hover { background-color: #4b5563; transform: translateY(-2px); }
+        .content-image { max-width: 100%; height: auto; border-radius: 12px; margin-top: 12px; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .content-text { text-align: left; line-height: 1.8; color: #374151; font-size: 1rem; }
+        .content-text p, .content-text ul { margin-bottom: 1.25rem; }
+        .content-text ul:not(.sub-topic-shortcut-list) { list-style-type: none; padding-left: 0; }
+        .content-text li:not(.shortcut-item) { margin-bottom: 0.75rem; padding-left: 1.75em; position: relative; }
+        .content-text li:not(.shortcut-item)::before { content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: #3b82f6; font-size: 1em; }
+        .sub-topic-comment-section { margin-top: 25px; padding-top: 15px; border-top: 1px solid #e0e7ff; text-align: left; }
+        .comment-list { max-height: 300px; overflow-y: auto; margin-bottom: 15px; padding-right: 10px; }
+        .comment-item { background-color: #f9fafb; padding: 10px 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #e5e7eb; }
+        .comment-author { font-weight: 600; color: #3b82f6; margin-bottom: 3px; font-size: 0.85rem; }
+        .comment-text { font-size: 0.9rem; color: #374151; line-height: 1.5; word-wrap: break-word; }
+        .comment-timestamp { font-size: 0.7rem; color: #9ca3af; margin-top: 5px; text-align: right; }
+        .comment-form textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #d1d5db; min-height: 60px; margin-bottom: 8px; font-size: 0.9rem; resize: vertical; }
+        .comment-form button { background-color: #3b82f6; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background-color 0.3s; border: none; font-size: 0.9rem; }
+        .comment-form button:hover { background-color: #2563eb; }
+        .comment-form button:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        .no-comments { color: #6b7280; text-align: center; padding: 15px; font-size: 0.9rem; }
+        .screen { animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="topicSelectionScreen" class="screen">
-            <div class="site-header">
-                <h1><i class="fas fa-graduation-cap" style="margin-right:10px;"></i>Kisah Kampus Kita</h1>
-                <p>Temukan cerita menarik, fakta unik, dan info penting seputar kehidupan mahasiswa di sini!</p>
+    <div class="container screen">
+        <a href="index.html" id="backToTopicsButton" class="btn-secondary"><i class="fas fa-chevron-left"></i> Kembali ke Topik</a>
+
+        <h2><i class="fas fa-info-circle" style="margin-right: 10px; color: #3b82f6;"></i>FYI Terkini: Jangan Sampai Ketinggalan Info Penting Kampus Pertanian!</h2>
+        
+        <div id="contentBody" class="content-text">
+            <p>Dunia kampus itu dinamis! Selalu ada informasi baru, pengumuman penting, atau event seru yang sayang banget kalau dilewatkan. Di sini, kamu bakal dapat update terkini seputar Fakultas Pertanian:</p><ul><li>Jadwal Seminar & Workshop Terbaru.</li><li>Informasi Beasiswa yang Sedang Dibuka.</li><li>Lowongan Asisten Dosen atau Asisten Praktikum.</li><li>Agenda Kegiatan BEM dan Himpunan Mahasiswa.</li><li>Gosip? Mungkin sedikit, yang penting bermanfaat! 😉</li></ul><p>Pastikan kamu selalu cek halaman ini agar nggak jadi mahasiswa 'kudet' (kurang update). Informasi adalah kekuatan!</p>
+            <div class="sub-topic-comment-section" id="comment-section-fyi-main">
+                <h4><i class="fas fa-comments" style="margin-right: 8px;"></i>Reaksi & Komentar Anonim</h4>
+                <div id="comment-list-fyi-main" class="comment-list"></div>
+                <p class="no-comments" id="no-comments-fyi-main" style="display: block;">Memuat komentar...</p> 
+                <form class="comment-form" data-subtopicid="fyi-main"><textarea placeholder="Tulis komentarmu sebagai pengunjung anonim..." required></textarea><button type="submit">Kirim Komentar</button></form>
             </div>
-            <div id="topicGrid"></div>
         </div>
+
     </div>
 
     <script type="module">
-        const firebaseConfig = {
-            apiKey: "AIzaSyA_lcZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
-            authDomain: "funny-e436a.firebaseapp.com",
-            projectId: "funny-e436a",
-            storageBucket: "funny-e436a.firebasestorage.app",
-            messagingSenderId: "626813764903",
-            appId: "1:626813764903:web:73250f741ddaac3a555502",
-            measurementId: "G-MSSK2DD3SD"
-        };
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        setLogLevel('error');
+        const firebaseConfig = {
+         apiKey: "AIzaSyA_lcZ-_2eDPcZ44efVhRRcOkJQamO4S5E",
+         authDomain: "funny-e436a.firebaseapp.com",
+         projectId: "funny-e436a",
+         storageBucket: "funny-e436a.firebasestorage.app",
+         messagingSenderId: "626813764903",
+         appId: "1:626813764903:web:73250f741ddaac3a555502",
+         measurementId: "G-MSSK2DD3SD"
+        };
+        
+        let app, db, auth;
+        let activeCommentListeners = {};
+        const appId = (firebaseConfig && firebaseConfig.appId) ? firebaseConfig.appId : 'default-app-id-error-config';
 
-        // Sign in anonymously
-        signInAnonymously(auth)
-            .then(() => {
-                console.log("User  signed in anonymously.");
-                // Load your content or perform other actions here
-            })
-            .catch((error) => {
-                console.error("Error signing in:", error);
+        function generateAnonymousName() {
+            const adjectives = ["Ceria", "Misterius", "Bijak", "Kreatif", "Semangat", "Unik", "Harmonis", "Optimis"];
+            const nouns = ["Pengunjung", "Penjelajah", "Pengamat", "Pencari Ilmu", "Sahabat Kampus", "Kontributor"];
+            const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+            const randomNumber = Math.floor(Math.random() * 1000);
+            return `${randomNoun} ${randomAdjective} #${randomNumber}`;
+        }
+
+        async function submitCommentForSubTopic(event, subTopicId) {
+            event.preventDefault();
+            if (!subTopicId || !db || !auth || !auth.currentUser) { return; }
+            const form = event.target;
+            const textarea = form.querySelector('textarea');
+            const button = form.querySelector('button');
+            const text = textarea.value.trim();
+            if (!text) return;
+
+            button.disabled = true;
+            button.textContent = "Mengirim...";
+
+            try {
+                const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
+                await addDoc(collection(db, commentsCollectionPath), {
+                    text: text,
+                    authorName: generateAnonymousName(),
+                    createdAt: serverTimestamp(),
+                    userId: auth.currentUser.uid
+                });
+                textarea.value = '';
+            } catch (error) {
+                console.error(`Error adding comment for ${subTopicId}: `, error);
+            } finally {
+                button.disabled = false;
+                button.textContent = "Kirim Komentar";
+            }
+        }
+
+        function displayCommentInList(data, listElement) {
+            const commentItem = document.createElement('div');
+            commentItem.classList.add('comment-item');
+            const authorP = document.createElement('p');
+            authorP.classList.add('comment-author');
+            authorP.textContent = data.authorName || "Pengunjung Anonim";
+            const textP = document.createElement('p');
+            textP.classList.add('comment-text');
+            textP.textContent = data.text;
+            commentItem.appendChild(authorP);
+            commentItem.appendChild(textP);
+            if (data.createdAt && data.createdAt.toDate) {
+                const timestampP = document.createElement('p');
+                timestampP.classList.add('comment-timestamp');
+                timestampP.textContent = data.createdAt.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short'});
+                commentItem.appendChild(timestampP);
+            }
+            listElement.appendChild(commentItem);
+        }
+
+        function loadCommentsForSubTopic(subTopicId) {
+            const commentListEl = document.getElementById(`comment-list-${subTopicId}`);
+            const noCommentsEl = document.getElementById(`no-comments-${subTopicId}`);
+            if (!commentListEl || !noCommentsEl) return;
+            
+            if (activeCommentListeners[subTopicId]) activeCommentListeners[subTopicId]();
+            commentListEl.innerHTML = '';
+            noCommentsEl.textContent = "Memuat komentar...";
+            noCommentsEl.style.display = 'block';
+
+            const commentsCollectionPath = `/artifacts/${appId}/public/data/subtopic_comments/${subTopicId}/comments`;
+            const q = query(collection(db, commentsCollectionPath), orderBy("createdAt", "desc"));
+
+            activeCommentListeners[subTopicId] = onSnapshot(q, (querySnapshot) => {
+                commentListEl.innerHTML = ''; 
+                if (querySnapshot.empty) {
+                    noCommentsEl.textContent = "Belum ada komentar. Jadilah yang pertama!";
+                    noCommentsEl.style.display = 'block'; 
+                } else {
+                    noCommentsEl.style.display = 'none'; 
+                    querySnapshot.forEach((doc) => { displayCommentInList(doc.data(), listElement); });
+                }
+            }, (error) => {
+                console.error(`Error loading comments:`, error);
+                noCommentsEl.textContent = "Gagal memuat komentar.";
+                noCommentsEl.style.display = 'block';
             });
+        }
 
-        // Your other JavaScript code here
+        async function initializePage() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setLogLevel('error');
+                await signInAnonymously(auth);
+                console.log("Firebase initialized and user signed in for this page.");
+
+                document.querySelectorAll('.comment-form').forEach(form => {
+                    const subTopicId = form.dataset.subtopicid;
+                    if(subTopicId) {
+                        loadCommentsForSubTopic(subTopicId);
+                        form.addEventListener('submit', (event) => submitCommentForSubTopic(event, subTopicId));
+                    }
+                });
+
+            } catch(e) {
+                console.error("Critical Firebase Error on this page:", e);
+                document.querySelectorAll('.comment-form').forEach(form => form.style.display = 'none');
+                document.querySelectorAll('.no-comments').forEach(el => el.textContent = 'Fitur komentar gagal dimuat.');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initializePage);
     </script>
 </body>
 </html>
